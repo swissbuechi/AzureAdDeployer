@@ -34,11 +34,10 @@ Param(
     [switch]$DisableAddToOneDrive
 )
 $ReportTitle = "Microsoft 365 Security Report"
-$Version = "2.15.1"
+$Version = "2.15.2"
 $script:VersionMessage = "AzureAdDeployer version: $($Version)"
 
 $ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
-$LogoImageUrl = "https://dreikom.ch/typo3conf/ext/eag_website/Resources/Public/Images/dreikom_logo.svg"
 
 $script:ExoConnected = $false
 $script:GraphConnected = $false
@@ -1310,7 +1309,6 @@ $ReportName = ("Microsoft365-Report-$($script:CustomerName).html").Replace(" ", 
 $PostContentHtml = @"
 <p id='FootNote'>$($script:VersionMessage)</p>
 <p id='FootNote'>Creation date: $(Get-Date -Format "dd.MM.yyyy HH:mm")</p>
-<img src="$($LogoImageUrl)" width='75'>
 "@
 Write-Host "Generating HTML report:" $ReportName
 $Report = ConvertTo-HTML -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head $Header -PostContent $PostContentHtml
