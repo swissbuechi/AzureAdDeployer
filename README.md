@@ -161,6 +161,13 @@ Update-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
 
 ## ToDo
 
+### General
+
+- Convert script to a module <https://learn.microsoft.com/en-us/powershell/scripting/developer/module/writing-a-windows-powershell-module?view=powershell-7.3>
+- Upload module to PowerShellGallery <https://learn.microsoft.com/en-us/powershell/scripting/gallery/concepts/publishing-guidelines?view=powershell-7.3>
+
+### Features
+
 - Manage Self-service password reset (no API available)
 - Manage Authentication methods available for users / Manage migration till Jan 24 <https://learn.microsoft.com/en-us/azure/active-directory/authentication/how-to-authentication-methods-manage>
 - Enable enterpise state roaming (no API available)
