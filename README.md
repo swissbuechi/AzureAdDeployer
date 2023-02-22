@@ -29,6 +29,11 @@ The module is published on the PowerShellGallery. You can install this module di
 
 `Install-Module -Name AzureAdDeployer -Scope AllUsers`
 
+
+### Create Desktop icon (Windows only)
+
+`Invoke-AzureAdDeployer -InstallDesktopIcon`
+
 ### Update via PowerShellGallery
 
 ```PowerShell
@@ -115,6 +120,7 @@ Alias: `aaddepl`
 
 - Generates a HTML report to your desktop called `Microsoft365-Report-<customer_name>.html`
 - Interactive console interface
+- Create Desktop icon (Windows only)
 
 ### Azure Active Directory
 
@@ -191,6 +197,7 @@ Alias: `aaddepl`
 
 | Argument                   | Description                                                              |
 | -------------------------- | ------------------------------------------------------------------------ |
+| `-InstallDesktopIcon` | Create Desktop icon (Windows only)                                       |
 | `-UseExistingGraphSession` | Do not create a new Graph SDK PowerShell session                         |
 | `-UseExistingSpoSession`   | Do not create a new SharePoint Online PowerShell session                 |
 | `-UseExistingExoSession`   | Do not create a new Exchange Online PowerShell session                   |
