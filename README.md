@@ -1,5 +1,7 @@
 # AzureAdDeployer
 
+ Tool to analyze and remediate Microsoft 365 according to current security best practices.
+
 ## Features
 
 ### General
