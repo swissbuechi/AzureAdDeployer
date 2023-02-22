@@ -4,7 +4,7 @@ function Connect-SPOSession {
     Write-Host "Connecting SharePoint Online PowerShell"
     if ($PSVersionTable.PSEdition -eq "Core") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser }
     if ($PSVersionTable.PSEdition -eq "Desktop") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive }
-    if ( -not (Request-SPOSession)) { exit }
+    if ( -not (Request-SPOSession)) { return }
 }
 function Get-SPOAdminURL {
     return ((Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/v1.0/sites/root).siteCollection.hostname) -replace ".sharepoint.com", "-admin.sharepoint.com"

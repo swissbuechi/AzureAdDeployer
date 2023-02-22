@@ -3,7 +3,7 @@ function Connect-EXO {
     Disconnect-EXOSession
     Write-Host "Connecting Exchange Online PowerShell"
     Connect-ExchangeOnline -ShowBanner:$false
-    if ( -not (Request-EXOSession)) { exit }
+    if ( -not (Request-EXOSession)) { return }
 }
 function Disconnect-EXOSession {
     Write-Host "Disconnecting existing Exchange Online PowerShell"

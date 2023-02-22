@@ -6,7 +6,7 @@ function Connect-GraphSession {
 User.Read.All, User.ReadWrite.All, Domain.Read.All, Directory.Read.All, Directory.ReadWrite.All,
 RoleManagement.ReadWrite.Directory, DeviceManagementApps.Read.All, DeviceManagementApps.ReadWrite.All,
 Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthenticationMethod.Read.All, Organization.Read.All" | Out-Null
-    if ( -not (Request-GraphSession)) { exit }
+    if ( -not (Request-GraphSession)) { return }
 }
 function Disconnect-GraphSession {
     Write-Host "Disconnecting existing Graph API PowerShell"
