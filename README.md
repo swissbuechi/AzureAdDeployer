@@ -1,5 +1,7 @@
 # AzureAdDeployer
 
+ Tool to analyze and remediate Microsoft 365 according to current security best practices.
+
 ## Features
 
 ### General
@@ -47,11 +49,25 @@
 
 ## Infos
 
-- Works on PowerShell Windows and PowerShell Core
+- Works on Windows PowerShell and PowerShell Core (Windows, macOS, Linux)
 
 ## Installation
 
-### Uninstall previously installed modules
+### Install via PowerShellGallery
+
+`Install-Module -Name AzureAdDeployer -Scope AllUsers`
+
+### Update via PowerShellGallery
+
+`Update-Module -Name AzureAdDeployer -Scope AllUsers`
+
+### Uninstall via PowerShellGallery
+
+`Uninstall-Module -Name AzureAdDeployer -Scope AllUsers`
+
+## Dependencies
+
+### Uninstall previously installed dependencies (optional)
 
 PowerShell as user:
 
@@ -75,7 +91,7 @@ Uninstall-Module -Name PnP.PowerShell
 Uninstall-Module -Name ExchangeOnlineManagement
 ```
 
-### Installation
+### Install dependencies
 
 Windows PowerShell 5.1 (not Core!) as administrator:
 
@@ -86,7 +102,7 @@ Install-Module -Name ExchangeOnlineManagement -Scope AllUsers
 Install-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
 ```
 
-### Updating
+### Update dependencies
 
 Windows PowerShell 5.1 (not Core!) as administrator:
 
@@ -145,26 +161,27 @@ Update-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
 
 ### Interactive GUI
 
-`.\AzureAdDeployer.ps1`
+`Invoke-AzureAdDeployer`
+
+Alias: `aaddepl`
 
 ### Azure Active Directory + Exchange Online HTML report
 
-`.\AzureAdDeployer.ps1 -AddExchangeOnlineReport`
+`aaddepl -AddExchangeOnlineReport`
 
 ### Create a BreakGlass account
 
-`.\AzureAdDeployer.ps1 -CreateBreakGlassAccount`
+`aaddepl -CreateBreakGlassAccount`
 
 ### Disable Security Defaults
 
-`.\AzureAdDeployer.ps1 -DisableSecurityDefaults`
+`aaddepl -DisableSecurityDefaults`
 
 ## ToDo
 
 ### General
 
-- Convert script to a module <https://learn.microsoft.com/en-us/powershell/scripting/developer/module/writing-a-windows-powershell-module?view=powershell-7.3>
-- Upload module to PowerShellGallery <https://learn.microsoft.com/en-us/powershell/scripting/gallery/concepts/publishing-guidelines?view=powershell-7.3>
+- Split into multiple modules
 
 ### Features
 
