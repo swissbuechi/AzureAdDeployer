@@ -338,7 +338,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         if ($EnableBlockMsolPowerShell) { enableBlockMsolPowerShell }
         Write-Host "Checking user settings"
         $Policy = Get-MgPolicyAuthorizationPolicy -Property BlockMsolPowerShell, DefaultUserRolePermissions
-        $Report = $Policy | Select-Object -Property  @{Name = "PermissionGrantPoliciesAssigned"; Expression = { [string]$_.DefaultUserRolePermissions.PermissionGrantPoliciesAssigned } },
+        $Report = $Policy | Select-Object -Property @{Name = "PermissionGrantPoliciesAssigned"; Expression = { [string]$_.DefaultUserRolePermissions.PermissionGrantPoliciesAssigned } },
         @{Name = "AllowedToCreateApps"; Expression = { [string]$_.DefaultUserRolePermissions.AllowedToCreateApps } },
         @{Name = "AllowedToCreateSecurityGroups"; Expression = { [string]$_.DefaultUserRolePermissions.AllowedToCreateSecurityGroups } },
         @{Name = "AllowedToCreateUnifiedGroups"; Expression = { checkAllowedToCreateUnifiedGroups } },
@@ -380,13 +380,13 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
     function checkAllowedToCreateUnifiedGroups {
         if ($GroupSettingsUnified = getGroupSettingsUnified) {
-            return ($GroupSettingsUnified.values | Where-Object name -eq "EnableGroupCreation").value
+            return ($GroupSettingsUnified.values | Where-Object name -EQ "EnableGroupCreation").value
         }
         return $true
     }
     function checkUnifiedGroupCreationAllowedGroup {
         $GroupSettingsUnified = getGroupSettingsUnified
-        if ($GroupId = ($GroupSettingsUnified.values | Where-Object name -eq "GroupCreationAllowedGroupId").value) {
+        if ($GroupId = ($GroupSettingsUnified.values | Where-Object name -EQ "GroupCreationAllowedGroupId").value) {
             return (Get-MgGroup -GroupId $GroupId -Property DisplayName).DisplayName
         }
     }
@@ -570,7 +570,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             }
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Assignment.PrincipalId)" -Status "Ready" -Completed
-        return $Assignments | Where-Object { -not ($null -eq $_.DisplayName) } | Sort-Object -Property UserPrincipalName | ConvertTo-HTML -Property DisplayName, UserPrincipalName, RoleName -As Table -Fragment -PreContent "<br><h3 id='AAD_ADMINS'>Admin role assignments</h3>"
+        return $Assignments | Where-Object { -not ($null -eq $_.DisplayName) } | Sort-Object -Property UserPrincipalName | ConvertTo-Html -Property DisplayName, UserPrincipalName, RoleName -As Table -Fragment -PreContent "<br><h3 id='AAD_ADMINS'>Admin role assignments</h3>"
     }
 
     <# BreakGlass account Section #>
@@ -579,14 +579,14 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             $Create
         )
         if ($BgAccount = getBreakGlassAccount) {
-            $Report = $BgAccount | ConvertTo-HTML -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>"
+            $Report = $BgAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>"
             $Report = $Report -Replace "<td>False</td>", "<td class='red'>False</td>"
             return $Report
 
         }
         if ($create) {
             createBreakGlassAccount
-            $Report = getBreakGlassAccount | ConvertTo-HTML -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>" -PostContent "<p>Check console log for credentials</p>"
+            $Report = getBreakGlassAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>" -PostContent "<p>Check console log for credentials</p>"
             $Report = $Report -Replace "<td>False</td>", "<td class='red'>False</td>"
             return $Report
         }
@@ -629,7 +629,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             ForceChangePasswordNextSignInWithMfa = $false
             Password                             = generatePassword
         }
-        $BgAccount = New-MgUser -DisplayName $DisplayName -UserPrincipalName $UPN -MailNickName $Name -PasswordProfile $PasswordProfile -PreferredLanguage "en-US" -AccountEnabled
+        $BgAccount = New-MgUser -DisplayName $DisplayName -UserPrincipalName $UPN -MailNickname $Name -PasswordProfile $PasswordProfile -PreferredLanguage "en-US" -AccountEnabled
         $DirObject = @{
             "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/$($BgAccount.id)"
         }
@@ -755,7 +755,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             Add-Member -InputObject $_ -NotePropertyName "AdditionalDetail" -NotePropertyValue $AdditionalDetail
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($_.DisplayName)" -Status "Ready" -Completed
-        $Report = $Users | Sort-Object -Property UserPrincipalName | ConvertTo-HTML -Property DisplayName, UserPrincipalName, LicenseStatus, AccountEnabled, MFAStatus, AdditionalDetail -As Table -Fragment -PreContent "<br><h3 id='AAD_MFA'>User MFA status</h3>" -PostContent "<p>Weak: PhoneAuthentication, EmailAuthentication</p><p>Strong: Fido2, PasswordlessMSAuthenticator, AuthenticatorApp, WindowsHelloForBusiness, SoftwareOath</p>"
+        $Report = $Users | Sort-Object -Property UserPrincipalName | ConvertTo-Html -Property DisplayName, UserPrincipalName, LicenseStatus, AccountEnabled, MFAStatus, AdditionalDetail -As Table -Fragment -PreContent "<br><h3 id='AAD_MFA'>User MFA status</h3>" -PostContent "<p>Weak: PhoneAuthentication, EmailAuthentication</p><p>Strong: Fido2, PasswordlessMSAuthenticator, AuthenticatorApp, WindowsHelloForBusiness, SoftwareOath</p>"
         $Report = $Report -Replace "<td>True</td><td>Disabled</td>", "<td>True</td><td class='red'>Disabled</td>"
         $Report = $Report -Replace "<td>True</td><td>Weak</td>", "<td>True</td><td class='orange'>Weak</td>"
         return $Report
@@ -770,7 +770,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         if (-not $Users) {
             return "<br><h3 id='AAD_GUEST'>Guest accounts</h3><p>Not found</p>"
         }
-        return $Users | Select-Object -Property DisplayName, UserPrincipalName, AccountEnabled, @{Name = "LastSignIn"; Expression = { $_.SignInActivity.LastSignInDateTime } } | Sort-Object -Property LastSignIn | ConvertTo-HTML -As Table -Fragment -PreContent "<br><h3 id='AAD_GUEST'>Guest accounts</h3>"
+        return $Users | Select-Object -Property DisplayName, UserPrincipalName, AccountEnabled, @{Name = "LastSignIn"; Expression = { $_.SignInActivity.LastSignInDateTime } } | Sort-Object -Property LastSignIn | ConvertTo-Html -As Table -Fragment -PreContent "<br><h3 id='AAD_GUEST'>Guest accounts</h3>"
     }
 
     <# Security defaults section #>
@@ -807,7 +807,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     function checkConditionalAccessPolicyReport {
         Write-Host "Checking conditional access policies"
         if ($Policy = Get-MgIdentityConditionalAccessPolicy -Property Id, DisplayName, State) {
-            return $Policy | ConvertTo-HTML -Property DisplayName, Id, State -As Table -Fragment -PreContent "<br><h3 id='AAD_CA'>Conditional access policies</h3>"
+            return $Policy | ConvertTo-Html -Property DisplayName, Id, State -As Table -Fragment -PreContent "<br><h3 id='AAD_CA'>Conditional access policies</h3>"
         }
         return "<br><h3 id='AAD_CA'>Conditional access policies</h3><p>Not found</p>"
     }
@@ -821,7 +821,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
                     }
                     return $IpRangesReport
                 }
-            }, @{Name = "Countries"; Expression = { $_.additionalProperties["countriesAndRegions"] } } | ConvertTo-HTML -As Table -Fragment -PreContent "<br><h3 id='AAD_CA_LOCATIONS'>Named locations</h3>"
+            }, @{Name = "Countries"; Expression = { $_.additionalProperties["countriesAndRegions"] } } | ConvertTo-Html -As Table -Fragment -PreContent "<br><h3 id='AAD_CA_LOCATIONS'>Named locations</h3>"
         }
         return "<br><h3 id='AAD_CA_LOCATIONS'>Named locations</h3><p>Not found</p>"
     }
@@ -830,7 +830,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     function checkAppProtectionPolicesReport {
         Write-Host "Checking app protection policies"
         if ($Polices = getAppProtectionPolices) {
-            return $Polices | ConvertTo-HTML -As Table -Property DisplayName, IsAssigned -Fragment -PreContent "<br><h3 id='AAD_APP_POLICY'>App protection policies</h3>"
+            return $Polices | ConvertTo-Html -As Table -Property DisplayName, IsAssigned -Fragment -PreContent "<br><h3 id='AAD_APP_POLICY'>App protection policies</h3>"
         }
         return "<br><h3 id='AAD_APP_POLICY'>App protection policies</h3><p>Not found</p>"
     }
@@ -853,7 +853,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             Write-Host "Disable add to OneDrive button"
             Set-PnPTenant -DisableAddToOneDrive $True
         }
-        $Report = Get-PnPTenant | ConvertTo-HTML -As List -Property LegacyAuthProtocolsEnabled, DisableAddToOneDrive, ConditionalAccessPolicy, SharingCapability, ODBMembersCanShare, PreventExternalUsersFromResharing, DefaultSharingLinkType, DefaultLinkPermission, FolderAnonymousLinkType, FileAnonymousLinkType, RequireAnonymousLinksExpireInDays -Fragment -PreContent "<h3 id='SPO_SETTINGS'>Tenant settings</h3>" -PostContent "<p>ConditionalAccessPolicy: AllowFullAccess, AllowLimitedAccess, BlockAccess</p>
+        $Report = Get-PnPTenant | ConvertTo-Html -As List -Property LegacyAuthProtocolsEnabled, DisableAddToOneDrive, ConditionalAccessPolicy, SharingCapability, ODBMembersCanShare, PreventExternalUsersFromResharing, DefaultSharingLinkType, DefaultLinkPermission, FolderAnonymousLinkType, FileAnonymousLinkType, RequireAnonymousLinksExpireInDays -Fragment -PreContent "<h3 id='SPO_SETTINGS'>Tenant settings</h3>" -PostContent "<p>ConditionalAccessPolicy: AllowFullAccess, AllowLimitedAccess, BlockAccess</p>
     <p>SharingCapability: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly</p>
     <p>DefaultSharingLinkType: None, Direct, Internal, AnonymousAccess</p>"
         $Report = $Report -Replace "<td>LegacyAuthProtocolsEnabled:</td><td>True</td>", "<td>LegacyAuthProtocolsEnabled:</td><td class='red'>True</td>"
@@ -935,13 +935,13 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
     function checkSPF {
         param($Domain)
-        if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $Domain.Id -QueryType TXT | Select-Object -Expand Answers).Text | where-object { $_ -match "v=spf1" } }
-        else { $SPFRecord = Resolve-DnsName -Name $Domain.Id -Type TXT -ErrorAction SilentlyContinue | where-object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
+        if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $Domain.Id -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" } }
+        else { $SPFRecord = Resolve-DnsName -Name $Domain.Id -Type TXT -ErrorAction SilentlyContinue | Where-Object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
         if ($SPFRecord -match "redirect") {
             $redirect = $SPFRecord.Split(" ")
             $RedirectName = $redirect -match "redirect" -replace "redirect="
-            if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $RedirectName -QueryType TXT | Select-Object -Expand Answers).Text | where-object { $_ -match "v=spf1" } }
-            else { $SPFRecord = Resolve-DnsName -Name $RedirectName -Type TXT -ErrorAction SilentlyContinue | where-object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
+            if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $RedirectName -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" } }
+            else { $SPFRecord = Resolve-DnsName -Name $RedirectName -Type TXT -ErrorAction SilentlyContinue | Where-Object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
         }
         if ($null -eq $SPFRecord) {
             $SPF = $false
@@ -1012,7 +1012,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             $MailboxReport += checkMailboxLoginAndLocation $Mailbox
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)" -Status "Ready" -Completed
-        return $MailboxReport | ConvertTo-HTML -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, LoginAllowed `
+        return $MailboxReport | ConvertTo-Html -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, LoginAllowed `
             -Fragment -PreContent "<br><h3 id='EXO_USER'>User mailbox</h3>"
     }
     function setMailboxLang {
@@ -1049,7 +1049,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             $MailboxReport += checkMailboxLoginAndLocation $Mailbox
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)" -Status "Ready" -Completed
-        $Report = $MailboxReport | ConvertTo-HTML -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, MessageCopyForSentAsEnabled,
+        $Report = $MailboxReport | ConvertTo-Html -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, MessageCopyForSentAsEnabled,
         MessageCopyForSendOnBehalfEnabled, LoginAllowed -Fragment -PreContent "<br><h3 id='EXO_SHARED'>Shared mailbox</h3>"
         $Report = $Report -Replace "<td>True</td><td>True</td><td>True</td>", "<td>True</td><td>True</td><td class='red'>True</td>"
         $Report = $Report -Replace "<td>False</td><td>False</td><td>True</td>", "<td>False</td><td>False</td><td class='red'>True</td>"
@@ -1089,7 +1089,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             $Mailboxes | Set-UnifiedGroup -HiddenFromExchangeClientsEnabled:$true -HiddenFromAddressListsEnabled:$false
             $Mailboxes = Get-UnifiedGroup -ResultSize Unlimited 
         }
-        return $Mailboxes | Sort-Object -Property PrimarySmtpAddress | ConvertTo-HTML -As Table -Property DisplayName, PrimarySmtpAddress, HiddenFromAddressListsEnabled, HiddenFromExchangeClientsEnabled -Fragment -PreContent "<br><h3 id='EXO_UNIFIED'>Unified mailbox</h3>" -PostContent "<p>Unified groups = Microsoft 365 groups</p>"
+        return $Mailboxes | Sort-Object -Property PrimarySmtpAddress | ConvertTo-Html -As Table -Property DisplayName, PrimarySmtpAddress, HiddenFromAddressListsEnabled, HiddenFromExchangeClientsEnabled -Fragment -PreContent "<br><h3 id='EXO_UNIFIED'>Unified mailbox</h3>" -PostContent "<p>Unified groups = Microsoft 365 groups</p>"
     }
 
     <# HTML table of content section #>
@@ -1306,7 +1306,7 @@ font-size: 12px;
 <p id='FootNote'>Creation date: $(Get-Date -Format "dd.MM.yyyy HH:mm")</p>
 "@
     Write-Host "Generating HTML report:" $ReportName
-    $Report = ConvertTo-HTML -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head $Header -PostContent $PostContentHtml
+    $Report = ConvertTo-Html -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head $Header -PostContent $PostContentHtml
     $Report | Out-File $Desktop\$ReportName
     Invoke-Item $Desktop\$ReportName
     if ($script:InteractiveMode) { Read-Host "Click [ENTER] key to exit AzureAdDeployer" }
