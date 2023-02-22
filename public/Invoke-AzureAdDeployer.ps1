@@ -26,7 +26,7 @@ function Invoke-AzureAdDeployer {
         [switch]$DisableAddToOneDrive
     )
     $ReportTitle = "Microsoft 365 Security Report"
-    $Version = "2.15.4"
+    $Version = "2.15.5"
     $script:VersionMessage = "AzureAdDeployer version: $($Version)"
 
     $ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
@@ -246,7 +246,7 @@ B: Back to main menu
 
     <# Connect sessions section #>
     function connectGraph {
-        disconnectGraph
+        if (checkGraphSession) { disconnectGraph }
         Write-Host "Connecting Graph API PowerShell"
         Connect-MgGraph -Scopes "Policy.Read.All, Policy.ReadWrite.ConditionalAccess, Application.Read.All,
 User.Read.All, User.ReadWrite.All, Domain.Read.All, Directory.Read.All, Directory.ReadWrite.All,
@@ -255,7 +255,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         if ( -not (checkGraphSession)) { exit }
     }
     function connectSpo {
-        disconnectSpo
+        if (checkSpoSession) { disconnectSpo }
         Write-Host "Connecting SharePoint Online PowerShell"
         if ($PSVersionTable.PSEdition -eq "Core") { Connect-PnPOnline -Url (getSpoAdminUrl) -Interactive -LaunchBrowser }
         if ($PSVersionTable.PSEdition -eq "Desktop") { Connect-PnPOnline -Url (getSpoAdminUrl) -Interactive }
@@ -265,7 +265,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         return ((Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/v1.0/sites/root).siteCollection.hostname) -replace ".sharepoint.com", "-admin.sharepoint.com"
     }
     function connectExo {
-        disconnectExo
+        if (checkExoSession) { disconnectExo }
         Write-Host "Connecting Exchange Online PowerShell"
         Connect-ExchangeOnline -ShowBanner:$false
         if ( -not (checkExoSession)) { exit }
