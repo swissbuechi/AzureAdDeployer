@@ -3,7 +3,7 @@ function Install-DesktopIcon {
         Write-Host "Creating a desktop shortcut is currently not supported on Unix"
         return
     }
-    New-DesktopIcon -ShortcutTargetPath 'powershell.exe' -ShortcutDisplayName 'AzureAdDeployer' -ShortcutArguments '-noexit -ExecutionPolicy Bypass -Command "aaddepl"' -IconFile (Get-IconPath) -PinToStart
+    New-DesktopShortcut -ShortcutTargetPath 'powershell.exe' -ShortcutDisplayName 'AzureAdDeployer' -ShortcutArguments '-noexit -ExecutionPolicy Bypass -Command "Invoke-AzureAdDeployer"' -IconFile (Get-IconPath) -PinToStart
 }
 function Get-IconPath {
     $Path = (Get-Module -ListAvailable -Name "AzureAdDeployer").Path
