@@ -12,9 +12,9 @@ jobs:
       - name: Install dependencies
         shell: pwsh
         run: | 
-          Install-Module -Name Microsoft.Graph
-          Install-Module -Name PnP.PowerShell
-          Install-Module -Name ExchangeOnlineManagement
+          Install-Module -Name Microsoft.Graph -Force
+          Install-Module -Name PnP.PowerShell -Force
+          Install-Module -Name ExchangeOnlineManagement -Force
       - name: Publish
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
