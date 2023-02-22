@@ -25,16 +25,23 @@
 
 ### Install via PowerShellGallery (recommended)
 
-The module is published on the PowerShellGallery. You can install this module directly from the PowerShellGallery with the following command:
+The module is published on the PowerShellGallery. You can install this module directly from the PowerShellGallery with the following command.
+
+As administrator:
 
 `Install-Module -Name AzureAdDeployer -Scope AllUsers`
 
-
 ### Create Desktop icon (Windows only)
+
+You need to recreate the Desktop icon after every update
+
+Run as user:
 
 `Invoke-AzureAdDeployer -InstallDesktopIcon`
 
 ### Update via PowerShellGallery
+
+As administrator:
 
 ```PowerShell
 Update-Module -Name AzureAdDeployer
@@ -50,7 +57,7 @@ Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version
 
 ### Uninstall previously installed dependencies (optional)
 
-PowerShell as user:
+As user:
 
 ```PowerShell
 $Documents = [Environment]::GetFolderPath("MyDocuments") 
@@ -58,7 +65,7 @@ Remove-Item $Documents\PowerShell\Modules\ -Recurse -Force
 Remove-Item $Documents\WindowsPowerShell\Modules\ -Recurse -Force
 ```
 
-Windows PowerShell 5.1 (not Core!) as administrator:
+As administrator:
 
 ```PowerShell
 Uninstall-Module -Name Microsoft365DSC
@@ -74,7 +81,7 @@ Uninstall-Module -Name ExchangeOnlineManagement
 
 ### Install dependencies
 
-Windows PowerShell 5.1 (not Core!) as administrator:
+As administrator:
 
 ```PowerShell
 Install-Module -Name Microsoft.Graph -Scope AllUsers
@@ -85,7 +92,7 @@ Install-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux require
 
 ### Update dependencies
 
-Windows PowerShell 5.1 (not Core!) as administrator:
+As administrator:
 
 ```PowerShell
 Update-Module -Name Microsoft.Graph
@@ -197,7 +204,7 @@ Alias: `aaddepl`
 
 | Argument                   | Description                                                              |
 | -------------------------- | ------------------------------------------------------------------------ |
-| `-InstallDesktopIcon` | Create Desktop icon (Windows only)                                       |
+| `-InstallDesktopIcon`      | Create Desktop icon (Windows only)                                       |
 | `-UseExistingGraphSession` | Do not create a new Graph SDK PowerShell session                         |
 | `-UseExistingSpoSession`   | Do not create a new SharePoint Online PowerShell session                 |
 | `-UseExistingExoSession`   | Do not create a new Exchange Online PowerShell session                   |
