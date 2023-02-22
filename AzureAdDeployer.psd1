@@ -12,7 +12,7 @@
     RootModule           = 'AzureAdDeployer.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '2.15.6'
+    ModuleVersion        = '2.15.7'
 
     # Supported PSEditions
     CompatiblePSEditions = @("Desktop", "Core")
@@ -104,7 +104,7 @@
             ProjectUri               = 'https://github.com/swissbuechi/AzureAdDeployer'
 
             # A URL to an icon representing this module.
-            IconUri                  = 'https://github.com/swissbuechi/AzureAdDeployer/blob/main/logo/logo.png'
+            IconUri                  = 'https://raw.githubusercontent.com/swissbuechi/AzureAdDeployer/main/logo/logo.png'
 
             # ReleaseNotes of this module
             # ReleaseNotes = ''
