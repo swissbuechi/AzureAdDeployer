@@ -26,7 +26,7 @@ function Invoke-AzureAdDeployer {
         [switch]$DisableAddToOneDrive
     )
     $ReportTitle = "Microsoft 365 Security Report"
-    $Version = "2.15.5"
+    $Version = "2.15.6"
     $script:VersionMessage = "AzureAdDeployer version: $($Version)"
 
     $ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
@@ -61,7 +61,7 @@ function Invoke-AzureAdDeployer {
     $script:AddSharePointOnlineReport = $AddSharePointOnlineReport
 
     <# Interactive inputs section #>
-    function CheckInteractiveMode {
+    function Request-InteractiveMode {
         Param(
             $Parameters
         )
@@ -71,14 +71,14 @@ function Invoke-AzureAdDeployer {
         }
         $script:InteractiveMode = $true
     }
-    function InteractiveMenu {
+    function Show-InteractiveMenu {
         $script:AddExchangeOnlineReport = $true
         $script:AddSharePointOnlineReport = $true
-        mainMenu
+        Show-MainMenu
     }
-    function mainMenu {
+    function Show-MainMenu {
         $StartOptionValue = 0
-        while (($result -ne $StartOptionValue) -or ($result -ne 1)) {
+        while (($Result -ne $StartOptionValue) -or ($Result -ne 1)) {
             Clear-Host
             $Status = @"
 $($script:VersionMessage)
@@ -97,16 +97,16 @@ C: Configure options
             $AddExchangeOnlineReportOption = New-Object System.Management.Automation.Host.ChoiceDescription "&2 EXO", "Add Exchange Online report"
             $Options = [System.Management.Automation.Host.ChoiceDescription[]]($StartOption, $ConfigureOption, $AddSharePointOnlineReportOption, $AddExchangeOnlineReportOption )
             Write-Host $Status
-            $result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
-            switch ($result) {
+            $Result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
+            switch ($Result) {
                 0 { return }
-                1 { configMenu }
+                1 { Show-ConfigMenu }
                 2 { $script:AddSharePointOnlineReport = ! $script:AddSharePointOnlineReport }
                 3 { $script:AddExchangeOnlineReport = ! $script:AddExchangeOnlineReport }
             }
         }
     }
-    function configMenu {
+    function Show-ConfigMenu {
         $StartOptionValue = 0
         Clear-Host
         $Status = @"
@@ -126,17 +126,17 @@ B: Back to main menu
         $EXOOption = New-Object System.Management.Automation.Host.ChoiceDescription "&3 EXO", "Exchange Online options"
         $Options = [System.Management.Automation.Host.ChoiceDescription[]]($BackOption, $AADOption, $SPOOption, $EXOOption)
         Write-Host $Status
-        $result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
-        switch ($result) {
+        $Result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
+        switch ($Result) {
             0 { return }
-            1 { AADMenu }
-            2 { SPOMenu }
-            3 { EXOMenu }
+            1 { Show-AADMenu }
+            2 { Show-SPOMenu }
+            3 { Show-EXOMenu }
         }
     }
-    function AADMenu {
+    function Show-AADMenu {
         $StartOptionValue = 0
-        while ($result -ne $StartOptionValue) {
+        while ($Result -ne $StartOptionValue) {
             Clear-Host
             $Status = @"
 $($script:VersionMessage)
@@ -170,8 +170,8 @@ B: Back to main menu
 
             $Options = [System.Management.Automation.Host.ChoiceDescription[]]($BackOption, $CreateBreakGlassAccountOption, $EnableSecurityDefaultsOption, $DisableSecurityDefaultsOption, $DisableEnterpiseApplicationUserConsentOption, $DisableUsersToCreateAppRegistrationsOption, $DisableUsersToReadOtherUsersOption, $DisableUsersToCreateSecurityGroupsOption, $DisableUsersToCreateUnifiedGroupsOption, $CreateUnifiedGroupCreationAllowedGroupOption, $EnableBlockMsolPowerShellOption)
             Write-Host $Status
-            $result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
-            switch ($result) {
+            $Result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
+            switch ($Result) {
                 0 { return }
                 1 { $script:CreateBreakGlassAccount = ! $script:CreateBreakGlassAccount }
                 2 { $script:EnableSecurityDefaults = ! $script:EnableSecurityDefaults }
@@ -186,9 +186,9 @@ B: Back to main menu
             }
         }
     }
-    function SPOMenu {
+    function Show-SPOMenu {
         $StartOptionValue = 0
-        while ($result -ne $StartOptionValue) {
+        while ($Result -ne $StartOptionValue) {
             Clear-Host
             $Status = @"
 $($script:VersionMessage)
@@ -203,16 +203,16 @@ B: Back to main menu
             $DisableAddToOneDriveOption = New-Object System.Management.Automation.Host.ChoiceDescription "&1}", "Disable add to OneDrive button"
             $Options = [System.Management.Automation.Host.ChoiceDescription[]]($BackOption, $DisableAddToOneDriveOption)
             Write-Host $Status
-            $result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
-            switch ($result) {
+            $Result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
+            switch ($Result) {
                 0 { return }
                 1 { $script:DisableAddToOneDrive = ! $script:DisableAddToOneDrive }
             }
         }
     }
-    function EXOMenu {
+    function Show-EXOMenu {
         $StartOptionValue = 0
-        while ($result -ne $StartOptionValue) {
+        while ($Result -ne $StartOptionValue) {
             Clear-Host
             $Status = @"
 $($script:VersionMessage)
@@ -233,8 +233,8 @@ B: Back to main menu
 
             $Options = [System.Management.Automation.Host.ChoiceDescription[]]($BackOption, $SetMailboxLanguageOption, $DisableSharedMailboxLoginOption, $EnableSharedMailboxCopyToSentOption, $HideUnifiedMailboxFromOutlookClientOption)
             Write-Host $Status
-            $result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
-            switch ($result) {
+            $Result = $host.ui.PromptForChoice("", "", $Options, $StartOptionValue)
+            switch ($Result) {
                 0 { return }
                 1 { $script:SetMailboxLanguage = ! $script:SetMailboxLanguage }
                 2 { $script:DisableSharedMailboxLogin = ! $script:DisableSharedMailboxLogin }
@@ -245,34 +245,34 @@ B: Back to main menu
     }
 
     <# Connect sessions section #>
-    function connectGraph {
-        if (checkGraphSession) { disconnectGraph }
+    function Connect-GraphSession {
+        if (Request-GraphSession) { Disconnect-GraphSession }
         Write-Host "Connecting Graph API PowerShell"
         Connect-MgGraph -Scopes "Policy.Read.All, Policy.ReadWrite.ConditionalAccess, Application.Read.All,
 User.Read.All, User.ReadWrite.All, Domain.Read.All, Directory.Read.All, Directory.ReadWrite.All,
 RoleManagement.ReadWrite.Directory, DeviceManagementApps.Read.All, DeviceManagementApps.ReadWrite.All,
 Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthenticationMethod.Read.All, Organization.Read.All" | Out-Null
-        if ( -not (checkGraphSession)) { exit }
+        if ( -not (Request-GraphSession)) { exit }
     }
-    function connectSpo {
-        if (checkSpoSession) { disconnectSpo }
+    function Connect-SPOSession {
+        if (Request-SPOSession) { Disconnect-SPOSession }
         Write-Host "Connecting SharePoint Online PowerShell"
-        if ($PSVersionTable.PSEdition -eq "Core") { Connect-PnPOnline -Url (getSpoAdminUrl) -Interactive -LaunchBrowser }
-        if ($PSVersionTable.PSEdition -eq "Desktop") { Connect-PnPOnline -Url (getSpoAdminUrl) -Interactive }
-        if ( -not (checkSpoSession)) { exit }
+        if ($PSVersionTable.PSEdition -eq "Core") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser }
+        if ($PSVersionTable.PSEdition -eq "Desktop") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive }
+        if ( -not (Request-SPOSession)) { exit }
     }
-    function getSpoAdminUrl {
+    function Get-SPOAdminURL {
         return ((Invoke-MgGraphRequest -Method GET -Uri https://graph.microsoft.com/v1.0/sites/root).siteCollection.hostname) -replace ".sharepoint.com", "-admin.sharepoint.com"
     }
-    function connectExo {
-        if (checkExoSession) { disconnectExo }
+    function Connect-EXO {
+        if (Request-EXOSession) { Disconnect-EXOSession }
         Write-Host "Connecting Exchange Online PowerShell"
         Connect-ExchangeOnline -ShowBanner:$false
-        if ( -not (checkExoSession)) { exit }
+        if ( -not (Request-EXOSession)) { exit }
     }
 
     <# Check session section#>
-    function checkGraphSession {
+    function Request-GraphSession {
         if (Get-MgContext) {
             Write-Host "Connected to Graph API PowerShell using $((Get-MgContext).Account) account"
             return $true
@@ -280,7 +280,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         Write-Host "Not connected to Graph API PowerShell"
         return $false
     }
-    function checkSpoSession {
+    function Request-SPOSession {
         if (Get-PnPConnection) {
             Write-Host "Connected to SharePoint Online PowerShell tenant $((Get-PnPConnection).Url)"
             return $true
@@ -288,7 +288,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         Write-Host "Not connected to SharePoint Online PowerShell"
         return $false
     }
-    function checkExoSession {
+    function Request-EXOSession {
         if ((Get-ConnectionInformation).State -eq "Connected") {
             Write-Host "Connected to Exchange Online PowerShell using $((Get-ConnectionInformation).UserPrincipalName) account"
             return $true
@@ -298,28 +298,28 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
     
     <# Disconect session section #>
-    function disconnectGraph {
+    function Disconnect-GraphSession {
         Write-Host "Disconnecting existing Graph API PowerShell"
         Disconnect-Graph | Out-Null
     }
-    function disconnectSpo {
+    function Disconnect-SPOSession {
         Write-Host "Disconnecting existing SharePoint Online PowerShell"
         Disconnect-PnPOnline
     }
-    function disconnectExo {
+    function Disconnect-EXOSession {
         Write-Host "Disconnecting existing Exchange Online PowerShell"
         Disconnect-ExchangeOnline -Confirm:$false
     }
 
     <# Customer infos#>
-    function organizationReport {
+    function Get-OrganizationReport {
         $Organization = Get-MgOrganization -Property DisplayName, Id
         $script:CustomerName = $Organization.DisplayName
         return  "<h2>$($Organization.DisplayName) ($($Organization.Id))</h2>"
     }
 
     <# User settings policy section #>
-    function checkTenanUserSettingsReport {
+    function Get-UserSettingsReport {
         param(
             [System.Boolean]$DisableUserConsent,
             [System.Boolean]$DisableUsersToCreateAppRegistrations,
@@ -329,22 +329,22 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             [System.Boolean]$CreateUnifiedGroupCreationAllowedGroup,
             [System.Boolean]$EnableBlockMsolPowerShell
         )
-        if ($DisableUserConsent) { disableApplicationUserConsent }
-        if ($DisableUsersToCreateAppRegistrations) { disableUsersToCreateAppRegistrations }
-        if ($DisableUsersToReadOtherUsers) { disableUsersToReadOtherUsers }
-        if ($DisableUsersToCreateSecurityGroups) { disableUsersToCreateSecurityGroups }
-        if ($DisableUsersToCreateUnifiedGroups) { disableUsersToCreateUnifiedGroups }
-        if ($CreateUnifiedGroupCreationAllowedGroup) { createUnifiedGroupCreationAllowedGroup }
-        if ($EnableBlockMsolPowerShell) { enableBlockMsolPowerShell }
+        if ($DisableUserConsent) { Disable-ApplicationUserConsent }
+        if ($DisableUsersToCreateAppRegistrations) { Disable-UsersToCreateAppRegistrations }
+        if ($DisableUsersToReadOtherUsers) { Disable-UsersToReadOtherUsers }
+        if ($DisableUsersToCreateSecurityGroups) { Disable-UsersToCreateSecurityGroups }
+        if ($DisableUsersToCreateUnifiedGroups) { Disable-UsersToCreateUnifiedGroups }
+        if ($CreateUnifiedGroupCreationAllowedGroup) { New-UnifiedGroupCreationAllowedGroup }
+        if ($EnableBlockMsolPowerShell) { Enable-BlockMsolPowerShell }
         Write-Host "Checking user settings"
         $Policy = Get-MgPolicyAuthorizationPolicy -Property BlockMsolPowerShell, DefaultUserRolePermissions
         $Report = $Policy | Select-Object -Property @{Name = "PermissionGrantPoliciesAssigned"; Expression = { [string]$_.DefaultUserRolePermissions.PermissionGrantPoliciesAssigned } },
         @{Name = "AllowedToCreateApps"; Expression = { [string]$_.DefaultUserRolePermissions.AllowedToCreateApps } },
         @{Name = "AllowedToCreateSecurityGroups"; Expression = { [string]$_.DefaultUserRolePermissions.AllowedToCreateSecurityGroups } },
-        @{Name = "AllowedToCreateUnifiedGroups"; Expression = { checkAllowedToCreateUnifiedGroups } },
-        @{Name = "AllowedToCreateUnifiedGroupsGroupName"; Expression = { checkUnifiedGroupCreationAllowedGroup } },
+        @{Name = "AllowedToCreateUnifiedGroups"; Expression = { Request-AllowedToCreateUnifiedGroups } },
+        @{Name = "AllowedToCreateUnifiedGroupsGroupName"; Expression = { Request-UnifiedGroupCreationAllowedGroup } },
         @{Name = "AllowedToReadOtherUsers"; Expression = { [string]$_.DefaultUserRolePermissions.AllowedToReadOtherUsers } },
-        @{Name = "AllowedToCreateTenants"; Expression = { checkAllowedToCreateTenants } },
+        @{Name = "AllowedToCreateTenants"; Expression = { Request-AllowedToCreateTenants } },
         BlockMsolPowerShell | ConvertTo-Html -As List -Fragment -PreContent "<h3 id='AAD_USER_SETTINGS'>User settings</h3>" -PostContent "<p>PermissionGrantPoliciesAssigned: empty (user consent not allowed), microsoft-user-default-legacy (user consent allowed for all apps), microsoft-user-default-low (user consent allowed for low permission apps)</p><p>Unified groups = Microsoft 365 groups</p>"
 
         $Report = $Report -Replace "<td>PermissionGrantPoliciesAssigned:</td><td>ManagePermissionGrantsForSelf.microsoft-user-default-legacy</td>", "<td>PermissionGrantPoliciesAssigned:</td><td class='red'>microsoft-user-default-legacy</td>"
@@ -358,75 +358,75 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         $Report = $Report -Replace "<td>BlockMsolPowerShell:</td><td>False</td>", "<td>BlockMsolPowerShell:</td><td class='red'>False</td>"
         return $Report
     }
-    function disableApplicationUserConsent {
+    function Disable-ApplicationUserConsent {
         Write-Host "Disable enterprise application user consent"
         Update-MgPolicyAuthorizationPolicy -DefaultUserRolePermissions @{ "PermissionGrantPoliciesAssigned" = @() }
     }
-    function disableUsersToCreateAppRegistrations {
+    function Disable-UsersToCreateAppRegistrations {
         Write-Host "Disable users to create app registrations"
         Update-MgPolicyAuthorizationPolicy -DefaultUserRolePermissions @{ "AllowedToCreateApps" = $false }
     }
-    function disableUsersToReadOtherUsers {
+    function Disable-UsersToReadOtherUsers {
         Write-Host "Disable users to read other users"
         Update-MgPolicyAuthorizationPolicy -DefaultUserRolePermissions @{ "AllowedToReadOtherUsers" = $false }
     }
-    function disableUsersToCreateSecurityGroups {
+    function Disable-UsersToCreateSecurityGroups {
         Write-Host "Disable users to create security groups"
         Update-MgPolicyAuthorizationPolicy -DefaultUserRolePermissions @{ "AllowedToCreateSecurityGroups" = $false }
     }
-    function enableBlockMsolPowerShell {
+    function Enable-BlockMsolPowerShell {
         Write-Host "Disable legacy MsolPowerShell access"
         Update-MgPolicyAuthorizationPolicy -BlockMsolPowerShell
     }
-    function checkAllowedToCreateUnifiedGroups {
-        if ($GroupSettingsUnified = getGroupSettingsUnified) {
+    function Request-AllowedToCreateUnifiedGroups {
+        if ($GroupSettingsUnified = Get-GroupSettingsUnified) {
             return ($GroupSettingsUnified.values | Where-Object name -EQ "EnableGroupCreation").value
         }
         return $true
     }
-    function checkUnifiedGroupCreationAllowedGroup {
-        $GroupSettingsUnified = getGroupSettingsUnified
+    function Request-UnifiedGroupCreationAllowedGroup {
+        $GroupSettingsUnified = Get-GroupSettingsUnified
         if ($GroupId = ($GroupSettingsUnified.values | Where-Object name -EQ "GroupCreationAllowedGroupId").value) {
             return (Get-MgGroup -GroupId $GroupId -Property DisplayName).DisplayName
         }
     }
-    function createUnifiedGroupCreationAllowedGroup {
+    function New-UnifiedGroupCreationAllowedGroup {
         Write-Host "Creating UnifiedGroupCreationAllowed group:" $script:UnifiedGroupCreationAllowedGroupName
-        if (checkUnifiedGroupCreationAllowedGroup) {
+        if (Request-UnifiedGroupCreationAllowedGroup) {
             Write-Host "UnifiedGroupCreationAllowed group already assigned"
             return
         }
         if ($GroupId = (Get-MgGroup -Property Id, DisplayName -Filter "DisplayName eq '$($script:UnifiedGroupCreationAllowedGroupName)'").Id) { Write-Host "UnifiedGroupCreationAllowed group already exists" } else { $GroupId = (New-MgGroup -DisplayName $script:UnifiedGroupCreationAllowedGroupName -MailEnabled:$False -MailNickname $script:UnifiedGroupCreationAllowedGroupName -SecurityEnabled).Id }
         $Body = @{
-            templateId = (getGroupSettingsTemplateUnified).id
+            templateId = (Get-GroupSettingsTemplateUnified).id
             values     = @( @{ Name = "GroupCreationAllowedGroupId" ; Value = $GroupId } )
         }
-        if ($GroupSettingsUnified = getGroupSettingsUnified) { Invoke-MgGraphRequest -Method PATCH -Uri "https://graph.microsoft.com/v1.0/groupSettings/$($GroupSettingsUnified.id)" -Body $Body }
+        if ($GroupSettingsUnified = Get-GroupSettingsUnified) { Invoke-MgGraphRequest -Method PATCH -Uri "https://graph.microsoft.com/v1.0/groupSettings/$($GroupSettingsUnified.id)" -Body $Body }
         else { Invoke-MgGraphRequest -Method POST -Uri "https://graph.microsoft.com/v1.0/groupSettings" -Body $Body }
     }
-    function getGroupSettingsTemplateUnified {
+    function Get-GroupSettingsTemplateUnified {
         $GroupSettingTemplates = Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/v1.0/groupSettingTemplates?$select=value"
         return $GroupSettingTemplates.value | Where-Object { $_.displayName -eq "Group.Unified" } | Select-Object -Property id, DisplayName
     }
-    function getGroupSettingsUnified {
+    function Get-GroupSettingsUnified {
         $GroupSettings = Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/v1.0/groupSettings?$select=value" 
-        return $GroupSettings.value | Where-Object { $_.templateId -eq (getGroupSettingsTemplateUnified).id } | Select-Object -Property id, templateId, values
+        return $GroupSettings.value | Where-Object { $_.templateId -eq (Get-GroupSettingsTemplateUnified).id } | Select-Object -Property id, templateId, values
     }
-    function disableUsersToCreateUnifiedGroups {
+    function Disable-UsersToCreateUnifiedGroups {
         $Body = @{
-            templateId = (getGroupSettingsTemplateUnified).id
+            templateId = (Get-GroupSettingsTemplateUnified).id
             values     = @( @{ Name = "EnableGroupCreation" ; Value = "false" } )
         }
-        if ($GroupSettingsUnified = getGroupSettingsUnified) { Invoke-MgGraphRequest -Method PATCH -Uri "https://graph.microsoft.com/v1.0/groupSettings/$($GroupSettingsUnified.id)" -Body $Body }
+        if ($GroupSettingsUnified = Get-GroupSettingsUnified) { Invoke-MgGraphRequest -Method PATCH -Uri "https://graph.microsoft.com/v1.0/groupSettings/$($GroupSettingsUnified.id)" -Body $Body }
         else { Invoke-MgGraphRequest -Method POST -Uri "https://graph.microsoft.com/v1.0/groupSettings" -Body $Body }
     }
-    function checkAllowedToCreateTenants {
+    function Request-AllowedToCreateTenants {
         $DefaultUserRolePermissions = (Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/policies/authorizationPolicy/authorizationPolicy").defaultUserRolePermissions
         return $DefaultUserRolePermissions["allowedToCreateTenants"]
     }
 
     <# Device join settings#>
-    function checkDeviceJoinSettingsReport {
+    function Get-DeviceJoinSettingsReport {
         Write-Host "Checking device join settings"
         $DeviceSettings = Invoke-MgGraphRequest -Method GET -Uri "https://graph.microsoft.com/beta/policies/deviceRegistrationPolicy?$select=azureAdJoin, userDeviceQuota, multiFactorAuthConfiguration"
         $Report = $DeviceSettings | Select-Object -Property @{Name = "Require MFA"; Expression = { if ($_.multiFactorAuthConfiguration -eq 1) { return $true } return $false } },
@@ -440,7 +440,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# License SKU section#>
-    function checkUsedSKUReport {
+    function Get-UsedSKUReport {
         Write-Host "Checking licenses"
         $SKU = Get-MgSubscribedSku -Property SkuPartNumber, ConsumedUnits, PrepaidUnits, AppliesTo
         return $SKU | Select-Object -Property @{Name = "Name"; Expression = { 
@@ -537,7 +537,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# User Account section #>
-    function disableUserAccount {
+    function Disable-UserAccount {
         param (
             $Users
         )
@@ -549,7 +549,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             Update-MgUser -UserId $User.UserPrincipalName -BodyParameter $params
         }
     }
-    function checkUserAccountStatus {
+    function Request-UserAccountStatus {
         param(
             $UserId
         )
@@ -557,7 +557,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Admin role section #>
-    function checkAdminRoleReport {
+    function Get-AdminRoleReport {
         Write-Host "Checking admin role assignments"
         $Assignments = Get-MgRoleManagementDirectoryRoleAssignment -Property PrincipalId, RoleDefinitionId
         foreach ($Assignment in $Assignments) {
@@ -574,51 +574,51 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# BreakGlass account Section #>
-    function checkBreakGlassAccountReport {
+    function Get-BreakGlassAccountReport {
         param (
             $Create
         )
-        if ($BgAccount = getBreakGlassAccount) {
-            $Report = $BgAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>"
+        if ($BGAccount = Get-BreakGlassAccount) {
+            $Report = $BGAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>"
             $Report = $Report -Replace "<td>False</td>", "<td class='red'>False</td>"
             return $Report
 
         }
         if ($create) {
-            createBreakGlassAccount
-            $Report = getBreakGlassAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>" -PostContent "<p>Check console log for credentials</p>"
+            New-BreakGlassAccount
+            $Report = Get-BreakGlassAccount | ConvertTo-Html -Property DisplayName, UserPrincipalName, AccountEnabled, GlobalAdmin, LastSignIn -As Table -Fragment -PreContent "<br><h3 id='AAD_BG'>BreakGlass account</h3>" -PostContent "<p>Check console log for credentials</p>"
             $Report = $Report -Replace "<td>False</td>", "<td class='red'>False</td>"
             return $Report
         }
         return "<br><h3 id='AAD_BG'>BreakGlass account</h3><p>Not found</p>"
     }
-    function getBreakGlassAccount {
+    function Get-BreakGlassAccount {
         Write-Host "Checking BreakGlass account"
         Select-MgProfile -Name "beta"
-        $BgAccounts = Get-MgUser -Filter "startswith(displayName, 'BreakGlass ')" -Property Id, DisplayName, UserPrincipalName, AccountEnabled, SignInActivity
+        $BGAccounts = Get-MgUser -Filter "startswith(displayName, 'BreakGlass ')" -Property Id, DisplayName, UserPrincipalName, AccountEnabled, SignInActivity
         Select-MgProfile -Name "v1.0"
         if (-not $bgAccounts) { 
-            $BgAccounts = Get-MgUser -Filter "startswith(displayName, 'BreakGlass ')" -Property Id, DisplayName, UserPrincipalName, AccountEnabled
+            $BGAccounts = Get-MgUser -Filter "startswith(displayName, 'BreakGlass ')" -Property Id, DisplayName, UserPrincipalName, AccountEnabled
         }
         if (-not $bgAccounts) { return }
-        foreach ($BgAccount in $BgAccounts) {
-            Add-Member -InputObject $BgAccount -NotePropertyName "GlobalAdmin" -NotePropertyValue (checkGlobalAdminRole $BgAccount.Id)
-            Add-Member -InputObject $BgAccount -NotePropertyName "LastSignIn" -NotePropertyValue $BgAccount.SignInActivity.LastSignInDateTime
+        foreach ($BGAccount in $BGAccounts) {
+            Add-Member -InputObject $BGAccount -NotePropertyName "GlobalAdmin" -NotePropertyValue (Request-GlobalAdminRole $BGAccount.Id)
+            Add-Member -InputObject $BGAccount -NotePropertyName "LastSignIn" -NotePropertyValue $BGAccount.SignInActivity.LastSignInDateTime
         }
-        return $BgAccounts
+        return $BGAccounts
     }
-    function getGlobalAdminRoleId {
+    function Get-GlobalAdminRoleId {
         return (Get-MgDirectoryRole -Filter "DisplayName eq 'Global Administrator'" -Property Id).Id
     }
-    function checkGlobalAdminRole {
+    function Request-GlobalAdminRole {
         param (
             $AccountId
         )
-        if (Get-MgDirectoryRoleMember -DirectoryRoleId (getGlobalAdminRoleId) -Filter "id eq '$($AccountId)'") {
+        if (Get-MgDirectoryRoleMember -DirectoryRoleId (Get-GlobalAdminRoleId) -Filter "id eq '$($AccountId)'") {
             return $true
         }
     }
-    function createBreakGlassAccount {
+    function New-BreakGlassAccount {
         Write-Host "Creating BreakGlass account:"
         $Name = -join ((97..122) | Get-Random -Count 64 | ForEach-Object { [char]$_ })
         $DisplayName = "BreakGlass $Name"
@@ -627,59 +627,59 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         $PasswordProfile = @{
             ForceChangePasswordNextSignIn        = $false
             ForceChangePasswordNextSignInWithMfa = $false
-            Password                             = generatePassword
+            Password                             = New-Password
         }
-        $BgAccount = New-MgUser -DisplayName $DisplayName -UserPrincipalName $UPN -MailNickname $Name -PasswordProfile $PasswordProfile -PreferredLanguage "en-US" -AccountEnabled
+        $BGAccount = New-MgUser -DisplayName $DisplayName -UserPrincipalName $UPN -MailNickname $Name -PasswordProfile $PasswordProfile -PreferredLanguage "en-US" -AccountEnabled
         $DirObject = @{
-            "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/$($BgAccount.id)"
+            "@odata.id" = "https://graph.microsoft.com/v1.0/directoryObjects/$($BGAccount.id)"
         }
-        New-MgDirectoryRoleMemberByRef -DirectoryRoleId (getGlobalAdminRoleId) -BodyParameter $DirObject
-        Add-Member -InputObject $BgAccount -NotePropertyName "Password" -NotePropertyValue $PasswordProfile.Password
-        Write-Host ($BgAccount | Select-Object -Property Id, DisplayName, UserPrincipalName, Password | Format-List | Out-String)
+        New-MgDirectoryRoleMemberByRef -DirectoryRoleId (Get-GlobalAdminRoleId) -BodyParameter $DirObject
+        Add-Member -InputObject $BGAccount -NotePropertyName "Password" -NotePropertyValue $PasswordProfile.Password
+        Write-Host ($BGAccount | Select-Object -Property Id, DisplayName, UserPrincipalName, Password | Format-List | Out-String)
     }
-    function generatePassword {
+    function New-Password {
         param (
             [ValidateRange(4, [int]::MaxValue)]
-            [int] $length = 64,
-            [int] $upper = 4,
-            [int] $lower = 4,
-            [int] $numeric = 4,
-            [int] $special = 4
+            [int] $Length = 64,
+            [int] $Upper = 4,
+            [int] $Lower = 4,
+            [int] $Numeric = 4,
+            [int] $Special = 4
         )
-        if ($upper + $lower + $numeric + $special -gt $length) {
-            throw "number of upper/lower/numeric/special char must be lower or equal to length"
+        if ($Upper + $Lower + $Numeric + $Special -gt $Length) {
+            throw "number of Upper/Lower/Numeric/Special char must be Lower or equal to Length"
         }
-        $uCharSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        $lCharSet = "abcdefghijklmnopqrstuvwxyz"
-        $nCharSet = "0123456789"
-        $sCharSet = "/*-+, !?=()@; :._"
-        $charSet = ""
-        if ($upper -gt 0) { $charSet += $uCharSet }
-        if ($lower -gt 0) { $charSet += $lCharSet }
-        if ($numeric -gt 0) { $charSet += $nCharSet }
-        if ($special -gt 0) { $charSet += $sCharSet }
-        $charSet = $charSet.ToCharArray()
-        $rng = New-Object System.Security.Cryptography.RNGCryptoServiceProvider
-        $bytes = New-Object byte[]($length)
-        $rng.GetBytes($bytes)
-        $result = New-Object char[]($length)
-        for ($i = 0 ; $i -lt $length ; $i++) {
-            $result[$i] = $charSet[$bytes[$i] % $charSet.Length]
+        $UpperCaseCharSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        $LowerCaseCharSet = "abcdefghijklmnopqrstuvwxyz"
+        $NumberCharSet = "0123456789"
+        $SpecialCharCharSet = "/*-+, !?=()@; :._"
+        $CharSet = ""
+        if ($Upper -gt 0) { $CharSet += $UpperCaseCharSet }
+        if ($Lower -gt 0) { $CharSet += $LowerCaseCharSet }
+        if ($Numeric -gt 0) { $CharSet += $NumberCharSet }
+        if ($Special -gt 0) { $CharSet += $SpecialCharCharSet }
+        $CharSet = $CharSet.ToCharArray()
+        $RNG = New-Object System.Security.Cryptography.RNGCryptoServiceProvider
+        $Bytes = New-Object byte[]($Length)
+        $RNG.GetBytes($Bytes)
+        $Result = New-Object char[]($Length)
+        for ($i = 0 ; $i -lt $Length ; $i++) {
+            $Result[$i] = $CharSet[$Bytes[$i] % $CharSet.Length]
         }
-        $password = (-join $result)
-        $valid = $true
-        if ($upper -gt ($password.ToCharArray() | Where-Object { $_ -cin $uCharSet.ToCharArray() }).Count) { $valid = $false }
-        if ($lower -gt ($password.ToCharArray() | Where-Object { $_ -cin $lCharSet.ToCharArray() }).Count) { $valid = $false }
-        if ($numeric -gt ($password.ToCharArray() | Where-Object { $_ -cin $nCharSet.ToCharArray() }).Count) { $valid = $false }
-        if ($special -gt ($password.ToCharArray() | Where-Object { $_ -cin $sCharSet.ToCharArray() }).Count) { $valid = $false }
-        if (!$valid) {
-            $password = Get-RandomPassword $length $upper $lower $numeric $special
+        $Password = (-join $Result)
+        $Valid = $true
+        if ($Upper -gt ($Password.ToCharArray() | Where-Object { $_ -cin $UpperCaseCharSet.ToCharArray() }).Count) { $Valid = $false }
+        if ($Lower -gt ($Password.ToCharArray() | Where-Object { $_ -cin $LowerCaseCharSet.ToCharArray() }).Count) { $Valid = $false }
+        if ($Numeric -gt ($Password.ToCharArray() | Where-Object { $_ -cin $NumberCharSet.ToCharArray() }).Count) { $Valid = $false }
+        if ($Special -gt ($Password.ToCharArray() | Where-Object { $_ -cin $SpecialCharCharSet.ToCharArray() }).Count) { $Valid = $false }
+        if (!$Valid) {
+            $Password = Get-RandomPassword $Length $Upper $Lower $Numeric $Special
         }
-        return $password
+        return $Password
     }
 
     <# User MFA section#>
-    function checkUserMfaStatusReport {
+    function Get-UserMfaStatusReport {
         Write-Host "Checking user MFA status"
         $Users = Get-MgUser -All -Filter "UserType eq 'Member'" -Property Id, DisplayName, UserPrincipalName, AssignedLicenses, AccountEnabled
         $Users | ForEach-Object {
@@ -695,7 +695,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             $AuthenticationMethod = @()
             $AdditionalDetails = @()
             foreach ($MFA in $MFAData) {
-                Switch ($MFA.AdditionalProperties["@odata.type"]) { 
+                switch ($MFA.AdditionalProperties["@odata.type"]) { 
                     "#microsoft.graph.passwordAuthenticationMethod" {
                         $AuthMethod = 'PasswordAuthentication'
                         $AuthMethodDetails = $MFA.AdditionalProperties["displayName"] 
@@ -762,7 +762,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Guest user section#>
-    function checkGuestUserReport {
+    function Get-GuestUserReport {
         Write-Host "Checking guest accounts"
         Select-MgProfile -Name "beta"
         $Users = Get-MgUser -All -Filter "UserType eq 'Guest'" -Property Id, DisplayName, UserPrincipalName, AccountEnabled, SignInActivity
@@ -774,27 +774,27 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Security defaults section #>
-    function checkSecurityDefaultsReport {
+    function Get-SecurityDefaultsReport {
         param (
             [System.Boolean]$EnableSecurityDefaults,
             [System.Boolean]$DisableSecurityDefaults
         )
         if ($EnableSecurityDefaults -and (-not $DisableSecurityDefaults)) {
-            updateSecurityDefaults -Enable $true
+            Update-SecurityDefaults -Enable $true
         }  
         if ($DisableSecurityDefaults -and (-not $EnableSecurityDefaults)) {
-            updateSecurityDefaults -Enable $false
+            Update-SecurityDefaults -Enable $false
         }
-        if (checkSecurityDefaults) {
+        if (Request-SecurityDefaults) {
             return "<br><h3 id='AAD_SEC_DEFAULTS'>Security defaults</h3><p>Enabled</p>"
         }
         return "<br><h3 id='AAD_SEC_DEFAULTS'>Security defaults</h3><p>Disabled</p>"
     }
-    function checkSecurityDefaults {
+    function Request-SecurityDefaults {
         Write-Host "Checking security defaults"
         return (Get-MgPolicyIdentitySecurityDefaultEnforcementPolicy -Property "isEnabled").IsEnabled
     }
-    function updateSecurityDefaults {
+    function Update-SecurityDefaults {
         param ([System.Boolean]$Enable)
         $params = @{
             IsEnabled = $Enable
@@ -804,14 +804,14 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Conditional access section #>
-    function checkConditionalAccessPolicyReport {
+    function Get-ConditionalAccessPolicyReport {
         Write-Host "Checking conditional access policies"
         if ($Policy = Get-MgIdentityConditionalAccessPolicy -Property Id, DisplayName, State) {
             return $Policy | ConvertTo-Html -Property DisplayName, Id, State -As Table -Fragment -PreContent "<br><h3 id='AAD_CA'>Conditional access policies</h3>"
         }
         return "<br><h3 id='AAD_CA'>Conditional access policies</h3><p>Not found</p>"
     }
-    function checkNamedLocationReport {
+    function Get-NamedLocationReport {
         Write-Host "Checking named locations"
         if ($Locations = Get-MgIdentityConditionalAccessNamedLocation) {
             return $Locations | Select-Object -Property DisplayName, @{Name = "Trusted"; Expression = { $_.additionalProperties["isTrusted"] } }, @{Name = "IPRange"; Expression = {
@@ -827,14 +827,14 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Application protection polices section#>
-    function checkAppProtectionPolicesReport {
+    function Get-AppProtectionPolicesReport {
         Write-Host "Checking app protection policies"
-        if ($Polices = getAppProtectionPolices) {
+        if ($Polices = Get-AppProtectionPolices) {
             return $Polices | ConvertTo-Html -As Table -Property DisplayName, IsAssigned -Fragment -PreContent "<br><h3 id='AAD_APP_POLICY'>App protection policies</h3>"
         }
         return "<br><h3 id='AAD_APP_POLICY'>App protection policies</h3><p>Not found</p>"
     }
-    function getAppProtectionPolices {
+    function Get-AppProtectionPolices {
         $IOSPolicies = Get-MgDeviceAppManagementiOSManagedAppProtection -Property DisplayName, IsAssigned
         $AndroidPolicies = Get-MgDeviceAppManagementAndroidManagedAppProtection -Property DisplayName, IsAssigned
         $Policies = @()
@@ -844,7 +844,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# SharePoint Tenant section #>
-    function checkSpoTenantReport {
+    function Get-SPOTenantReport {
         param(
             [System.Boolean]$DisableAddToOneDrive
         )
@@ -866,7 +866,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Mail Domain section #>
-    function checkMailDomainReport {
+    function Get-MailDomainReport {
         Write-Host "Checking domains"
         $Domains = Get-DkimSigningConfig | Select-Object -Property Id, @{Name = "Default"; Expression = { $_.IsDefault } }, @{Name = "DKIM"; Expression = { $_.Enabled } }
         if (-not ($Domains)) { $Domains = Get-AcceptedDomain | Select-Object -Property Id, "Default", @{Name = "DKIM"; Expression = { $false } } }
@@ -874,8 +874,8 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         foreach ($Domain in $Domains) {
             $ProcessedCount++
             Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Domain.Id)"
-            $Domain = checkDMARC -Domain $Domain
-            $Domain = checkSPF -Domain $Domain
+            $Domain = Get-DMARC -Domain $Domain
+            $Domain = Get-SPF -Domain $Domain
             $DomainsReport += $Domain
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Domain.Id)" -Status "Ready" -Completed
@@ -893,7 +893,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         $Report = $Report -Replace "<td>No qualifier found</td>", "<td class='red'>No qualifier found</td>"
         return $Report
     }
-    function checkDMARC {
+    function Get-DMARC {
         param($Domain)
         if ($PSVersionTable.Platform -eq "Unix") { $DMARCRecord = (Resolve-Dns -Query "_dmarc.$($Domain.Id)" -QueryType TXT | Select-Object -Expand Answers).Text }
         else { $DMARCRecord = Resolve-DnsName -Name "_dmarc.$($Domain.Id)" -Type TXT -ErrorAction SilentlyContinue | Select-Object -ExpandProperty strings }
@@ -933,7 +933,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         $Domain | Add-Member NoteProperty "DMARC hint" $DmarcHint
         return $Domain
     }
-    function checkSPF {
+    function Get-SPF {
         param($Domain)
         if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $Domain.Id -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" } }
         else { $SPFRecord = Resolve-DnsName -Name $Domain.Id -Type TXT -ErrorAction SilentlyContinue | Where-Object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
@@ -981,7 +981,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Mail connector section#>
-    function checkMailConnectorReport {
+    function Get-MailConnectorReport {
         Write-Host "Checking mail connectors"
         if (-not ($Inbound = Get-InboundConnector)) { $InboundReport = "<br><h3 id='EXO_CONNECTOR_IN'>Inbound mail connector</h3><p>Not found</p>" }
         else { $InboundReport = $Inbound | ConvertTo-Html -As Table -Property Name, SenderDomains, SenderIPAddresses, Enabled -Fragment -PreContent "<br><h3 id='EXO_CONNECTOR_IN'>Inbound mail connector</h3>" }
@@ -994,7 +994,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# User mailbox section #>
-    function checkMailboxReport {
+    function Get-UserMailboxReport {
         param(
             [System.Boolean]$Language
         )
@@ -1003,19 +1003,19 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
             return "<br><h3 id='EXO_USER'>User mailbox</h3><p>Not found</p>"
         }
         if ($Language) {
-            setMailboxLang -Mailbox $Mailboxes
+            Update-MailboxLang -Mailbox $Mailboxes
         }
         $MailboxReport = @()
         foreach ($Mailbox in $Mailboxes) {
             $ProcessedCount++
             Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)"
-            $MailboxReport += checkMailboxLoginAndLocation $Mailbox
+            $MailboxReport += Get-MailboxLoginAndLocation $Mailbox
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)" -Status "Ready" -Completed
         return $MailboxReport | ConvertTo-Html -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, LoginAllowed `
             -Fragment -PreContent "<br><h3 id='EXO_USER'>User mailbox</h3>"
     }
-    function setMailboxLang {
+    function Update-MailboxLang {
         param(
             $Mailbox
         )
@@ -1024,7 +1024,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Shared mailbox section #>
-    function checkSharedMailboxReport {
+    function Get-SharedMailboxReport {
         param(
             [System.Boolean]$Language,
             [System.Boolean]$DisableLogin,
@@ -1035,10 +1035,10 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
                 UserPrincipalName, MessageCopyForSentAsEnabled, MessageCopyForSendOnBehalfEnabled)) {
             return "<br><h3 id='EXO_SHARED'>Shared mailbox</h3><p>Not found</p>"
         }
-        if ($Language) { setMailboxLang -Mailbox $Mailboxes }
-        if ($DisableLogin) { disableUserAccount $Mailboxes }
+        if ($Language) { Update-MailboxLang -Mailbox $Mailboxes }
+        if ($DisableLogin) { Disable-UserAccount $Mailboxes }
         if ($EnableCopy) {
-            setSharedMailboxEnableCopyToSent $Mailboxes
+            Enable-SharedMailboxEnableCopyToSent $Mailboxes
             $Mailboxes = Get-EXOMailbox -RecipientTypeDetails SharedMailbox -ResultSize:Unlimited -Properties DisplayName,
             UserPrincipalName, MessageCopyForSentAsEnabled, MessageCopyForSendOnBehalfEnabled
         }
@@ -1046,7 +1046,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         foreach ($Mailbox in $Mailboxes) {
             $ProcessedCount++
             Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)"
-            $MailboxReport += checkMailboxLoginAndLocation $Mailbox
+            $MailboxReport += Get-MailboxLoginAndLocation $Mailbox
         }
         Write-Progress -Activity "Processed count: $ProcessedCount; Currently processing: $($Mailbox.DisplayName)" -Status "Ready" -Completed
         $Report = $MailboxReport | ConvertTo-Html -As Table -Property UserPrincipalName, DisplayName, Language, TimeZone, MessageCopyForSentAsEnabled,
@@ -1057,17 +1057,17 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
         $Report = $Report -Replace "<td>False</td><td>True</td><td>True</td>", "<td>False</td><td>True</td><td class='red'>True</td>"
         return $Report
     }
-    function checkMailboxLoginAndLocation {
+    function Get-MailboxLoginAndLocation {
         param (
             $Mailbox
         )
         $ReginalConfig = $Mailbox | Get-MailboxRegionalConfiguration
         Add-Member -InputObject $Mailbox -NotePropertyName "Language" -NotePropertyValue $ReginalConfig.Language
         Add-Member -InputObject $Mailbox -NotePropertyName "TimeZone" -NotePropertyValue $ReginalConfig.TimeZone
-        Add-Member -InputObject $Mailbox -NotePropertyName "LoginAllowed" -NotePropertyValue (checkUserAccountStatus $Mailbox.UserPrincipalName)
+        Add-Member -InputObject $Mailbox -NotePropertyName "LoginAllowed" -NotePropertyValue (Request-UserAccountStatus $Mailbox.UserPrincipalName)
         return $Mailbox
     }
-    function setSharedMailboxEnableCopyToSent {
+    function Enable-SharedMailboxEnableCopyToSent {
         param(
             $Mailbox
         )
@@ -1076,7 +1076,7 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
     }
 
     <# Unified mailbox section #>
-    function checkUnifiedMailboxReport {
+    function Get-UnifiedMailboxReport {
         param(
             [System.Boolean]$HideFromClient
         )
@@ -1130,69 +1130,69 @@ Policy.ReadWrite.Authorization, Sites.Read.All, AuditLog.Read.All, UserAuthentic
 "@
 
     <# Script logic start section #>
-    CheckInteractiveMode -Parameters $PSBoundParameters
+    Request-InteractiveMode -Parameters $PSBoundParameters
     if ($script:InteractiveMode) {
-        InteractiveMenu
+        Show-InteractiveMenu
     }
 
-    if (-not $UseExistingGraphSession) { connectGraph }
-    else { if ( -not (checkGraphSession)) { exit } }
+    if (-not $UseExistingGraphSession) { Connect-GraphSession }
+    else { if ( -not (Request-GraphSession)) { exit } }
     $TableOfContents += $AADTableOfContents
 
     if ($script:AddSharePointOnlineReport -or $script:DisableAddToOneDrive) { 
-        if (-not $UseExistingSpoSession) { connectSpo }
-        else { if ( -not (checkSpoSession)) { exit } }
+        if (-not $UseExistingSpoSession) { Connect-SPOSession }
+        else { if ( -not (Request-SPOSession)) { exit } }
         $TableOfContents += $SPOTableOfContents
     }
 
     if ($script:AddExchangeOnlineReport -or $script:SetMailboxLanguage -or $script:DisableSharedMailboxLogin -or $script:EnableSharedMailboxCopyToSent -or $script:HideUnifiedMailboxFromOutlookClient) {
-        if (-not $UseExistingExoSession) { connectExo }
-        else { if ( -not (checkExoSession)) { exit } }
+        if (-not $UseExistingExoSession) { Connect-EXO }
+        else { if ( -not (Request-EXOSession)) { exit } }
         $TableOfContents += $EXOTabelOfContents
     }
 
     $Report = @()
-    $Report += organizationReport
+    $Report += Get-OrganizationReport
     $Report += $TableOfContents
     $Report += "<br><hr><h2 id='AAD'>Azure Active Directory</h2>"
     Write-Host "Azure Active Directory"
-    $Report += checkTenanUserSettingsReport -DisableUserConsent $script:DisableEnterpiseApplicationUserConsent -DisableUsersToCreateAppRegistrations $script:DisableUsersToCreateAppRegistrations -DisableUsersToReadOtherUsers $script:DisableUsersToReadOtherUsers -DisableUsersToCreateSecurityGroups $script:DisableUsersToCreateSecurityGroups -DisableUsersToCreateUnifiedGroups $script:DisableUsersToCreateUnifiedGroups -CreateUnifiedGroupCreationAllowedGroup $script:CreateUnifiedGroupCreationAllowedGroup -EnableBlockMsolPowerShell $script:EnableBlockMsolPowerShell
-    $Report += checkDeviceJoinSettingsReport
-    $Report += checkUsedSKUReport
-    $Report += checkAdminRoleReport
-    $Report += checkBreakGlassAccountReport -Create $script:CreateBreakGlassAccount
-    $Report += checkUserMfaStatusReport
-    $Report += checkGuestUserReport
-    $Report += checkSecurityDefaultsReport -Enable $script:EnableSecurityDefaults -Disable $script:DisableSecurityDefaults
-    $Report += checkConditionalAccessPolicyReport
-    $Report += checkNamedLocationReport
-    $Report += checkAppProtectionPolicesReport
+    $Report += Get-UserSettingsReport -DisableUserConsent $script:DisableEnterpiseApplicationUserConsent -DisableUsersToCreateAppRegistrations $script:DisableUsersToCreateAppRegistrations -DisableUsersToReadOtherUsers $script:DisableUsersToReadOtherUsers -DisableUsersToCreateSecurityGroups $script:DisableUsersToCreateSecurityGroups -DisableUsersToCreateUnifiedGroups $script:DisableUsersToCreateUnifiedGroups -CreateUnifiedGroupCreationAllowedGroup $script:CreateUnifiedGroupCreationAllowedGroup -EnableBlockMsolPowerShell $script:EnableBlockMsolPowerShell
+    $Report += Get-DeviceJoinSettingsReport
+    $Report += Get-UsedSKUReport
+    $Report += Get-AdminRoleReport
+    $Report += Get-BreakGlassAccountReport -Create $script:CreateBreakGlassAccount
+    $Report += Get-UserMfaStatusReport
+    $Report += Get-GuestUserReport
+    $Report += Get-SecurityDefaultsReport -Enable $script:EnableSecurityDefaults -Disable $script:DisableSecurityDefaults
+    $Report += Get-ConditionalAccessPolicyReport
+    $Report += Get-NamedLocationReport
+    $Report += Get-AppProtectionPolicesReport
 
     if ($script:AddSharePointOnlineReport -or $script:DisableAddToOneDrive) {
         $Report += "<br><hr><h2 id='SPO'>SharePoint Online</h2>"
         Write-Host "SharePoint Online"
-        $Report += checkSpoTenantReport -DisableAddToOneDrive $script:DisableAddToOneDrive
+        $Report += Get-SPOTenantReport -DisableAddToOneDrive $script:DisableAddToOneDrive
     }
     if ($script:AddExchangeOnlineReport -or $script:SetMailboxLanguage -or $script:DisableSharedMailboxLogin -or $script:EnableSharedMailboxCopyToSent -or $script:HideUnifiedMailboxFromOutlookClient) {
         $Report += "<br><hr><h2 id='EXO'>Exchange Online</h2>"
         Write-Host "Exchange Online"
-        $Report += checkMailDomainReport
-        $Report += checkMailConnectorReport
-        $Report += checkMailboxReport -Language $script:SetMailboxLanguage
-        $Report += checkSharedMailboxReport -Language $script:SetMailboxLanguage -DisableLogin $script:DisableSharedMailboxLogin -EnableCopy $script:EnableSharedMailboxCopyToSent
-        $Report += checkUnifiedMailboxReport -HideFromClient $script:HideUnifiedMailboxFromOutlookClient
+        $Report += Get-MailDomainReport
+        $Report += Get-MailConnectorReport
+        $Report += Get-UserMailboxReport -Language $script:SetMailboxLanguage
+        $Report += Get-SharedMailboxReport -Language $script:SetMailboxLanguage -DisableLogin $script:DisableSharedMailboxLogin -EnableCopy $script:EnableSharedMailboxCopyToSent
+        $Report += Get-UnifiedMailboxReport -HideFromClient $script:HideUnifiedMailboxFromOutlookClient
     }
     if (-not $KeepGraphSessionAlive) {
-        disconnectGraph
+        Disconnect-GraphSession
     }
     if (-not $KeepSpoSessionAlive) {
         if ($script:AddSharePointOnlineReport -or $script:DisableAddToOneDrive) { 
-            disconnectSpo
+            Disconnect-SPOSession
         }
     }
     if (-not $KeepExoSessionAlive) {
         if ($script:AddExchangeOnlineReport -or $script:SetMailboxLanguage -or $script:DisableSharedMailboxLogin -or $script:EnableSharedMailboxCopyToSent -or $script:HideUnifiedMailboxFromOutlookClient) {
-            disconnectExo
+            Disconnect-EXOSession
         }
     }
 
