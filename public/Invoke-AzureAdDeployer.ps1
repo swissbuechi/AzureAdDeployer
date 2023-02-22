@@ -23,7 +23,8 @@ function Invoke-AzureAdDeployer {
         [switch]$DisableSharedMailboxLogin,
         [switch]$EnableSharedMailboxCopyToSent,
         [switch]$HideUnifiedMailboxFromOutlookClient,
-        [switch]$DisableAddToOneDrive
+        [switch]$DisableAddToOneDrive,
+        [switch]$InstallDesktopIcon
     )
     $script:ReportTitle = "Microsoft 365 Security Report"
     $Version = $script:ModuleInfos.ModuleVersion
@@ -61,26 +62,30 @@ function Invoke-AzureAdDeployer {
     $script:AddSharePointOnlineReport = $AddSharePointOnlineReport
 
     <# Script logic start section #>
+    if ($InstallDesktopIcon) { 
+        Install-DesktopIcon 
+        return
+    }
     Request-InteractiveMode -Parameters $PSBoundParameters
     if ($script:InteractiveMode) {
         Show-InteractiveMenu
     }
 
     if (-not $UseExistingGraphSession) { Connect-GraphSession }
-    else { if ( -not (Request-GraphSession)) { exit } }
+    else { if ( -not (Request-GraphSession)) { return } }
     $TableOfContents = @()
     $TableOfContents += "<br><hr><h2>Contents</h2>"
     $TableOfContents += Get-AADTableOfContents
 
     if ($script:AddSharePointOnlineReport -or $script:DisableAddToOneDrive) { 
         if (-not $UseExistingSpoSession) { Connect-SPOSession }
-        else { if ( -not (Request-SPOSession)) { exit } }
+        else { if ( -not (Request-SPOSession)) { return } }
         $TableOfContents += Get-SPOTableOfContents
     }
 
     if ($script:AddExchangeOnlineReport -or $script:SetMailboxLanguage -or $script:DisableSharedMailboxLogin -or $script:EnableSharedMailboxCopyToSent -or $script:HideUnifiedMailboxFromOutlookClient) {
         if (-not $UseExistingExoSession) { Connect-EXO }
-        else { if ( -not (Request-EXOSession)) { exit } }
+        else { if ( -not (Request-EXOSession)) { return } }
         $TableOfContents += Get-EXOTableOfContents
     }
 
