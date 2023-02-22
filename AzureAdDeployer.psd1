@@ -104,7 +104,7 @@
             ProjectUri               = 'https://github.com/swissbuechi/AzureAdDeployer'
 
             # A URL to an icon representing this module.
-            # IconUri = ''
+            IconUri                  = 'https://github.com/swissbuechi/AzureAdDeployer/blob/main/logo/logo.png'
 
             # ReleaseNotes of this module
             # ReleaseNotes = ''
