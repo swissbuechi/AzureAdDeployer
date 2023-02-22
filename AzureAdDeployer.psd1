@@ -12,7 +12,7 @@
     RootModule           = 'AzureAdDeployer.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '2.15.7'
+    ModuleVersion        = '2.15.8'
 
     # Supported PSEditions
     CompatiblePSEditions = @("Desktop", "Core")
@@ -51,7 +51,7 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules      = @( 'Microsoft.Graph.Authentication', 'Microsoft.Graph.Users', 'Microsoft.Graph.Identity.DirectoryManagement', 'Microsoft.Graph.DeviceManagement.Enrolment', 'Microsoft.Graph.Identity.SignIns', 'Microsoft.Graph.Devices.CorporateManagement', 'ExchangeOnlineManagement', 'PnP.PowerShell')
+    # RequiredModules      = @( 'Microsoft.Graph.Authentication', 'Microsoft.Graph.Users', 'Microsoft.Graph.Identity.DirectoryManagement', 'Microsoft.Graph.DeviceManagement.Enrolment', 'Microsoft.Graph.Identity.SignIns', 'Microsoft.Graph.Devices.CorporateManagement', 'ExchangeOnlineManagement', 'PnP.PowerShell')
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
