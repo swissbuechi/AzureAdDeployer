@@ -37,8 +37,8 @@ The module is published on the PowerShellGallery. You can install this module di
 ### Update via PowerShellGallery
 
 ```PowerShell
-Update-Module -Name AzureAdDeployer -Scope AllUsers
-$Latest = Get-InstalledModule AzureAdDeployer; 
+Update-Module -Name AzureAdDeployer
+$Latest = Get-InstalledModule AzureAdDeployer
 Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
 ```
 
@@ -88,10 +88,10 @@ Install-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux require
 Windows PowerShell 5.1 (not Core!) as administrator:
 
 ```PowerShell
-Update-Module -Name Microsoft.Graph -Scope AllUsers
-Update-Module -Name PnP.PowerShell -Scope AllUsers
-Update-Module -Name ExchangeOnlineManagement -Scope AllUsers
-Update-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
+Update-Module -Name Microsoft.Graph
+Update-Module -Name PnP.PowerShell
+Update-Module -Name ExchangeOnlineManagement
+Update-Module -Name DnsClient-PS #Only on Mac and Linux required
 ```
 
 ## Usage
