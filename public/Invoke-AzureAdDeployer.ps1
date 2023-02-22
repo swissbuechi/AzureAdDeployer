@@ -64,7 +64,7 @@ function Invoke-AzureAdDeployer {
     <# Script logic start section #>
     if ($InstallDesktopIcon) { 
         Install-DesktopIcon 
-        exit 1
+        return
     }
     Request-InteractiveMode -Parameters $PSBoundParameters
     if ($script:InteractiveMode) {
@@ -72,20 +72,20 @@ function Invoke-AzureAdDeployer {
     }
 
     if (-not $UseExistingGraphSession) { Connect-GraphSession }
-    else { if ( -not (Request-GraphSession)) { exit 1 } }
+    else { if ( -not (Request-GraphSession)) { return } }
     $TableOfContents = @()
     $TableOfContents += "<br><hr><h2>Contents</h2>"
     $TableOfContents += Get-AADTableOfContents
 
     if ($script:AddSharePointOnlineReport -or $script:DisableAddToOneDrive) { 
         if (-not $UseExistingSpoSession) { Connect-SPOSession }
-        else { if ( -not (Request-SPOSession)) { exit 1 } }
+        else { if ( -not (Request-SPOSession)) { return } }
         $TableOfContents += Get-SPOTableOfContents
     }
 
     if ($script:AddExchangeOnlineReport -or $script:SetMailboxLanguage -or $script:DisableSharedMailboxLogin -or $script:EnableSharedMailboxCopyToSent -or $script:HideUnifiedMailboxFromOutlookClient) {
         if (-not $UseExistingExoSession) { Connect-EXO }
-        else { if ( -not (Request-EXOSession)) { exit 1 } }
+        else { if ( -not (Request-EXOSession)) { return } }
         $TableOfContents += Get-EXOTableOfContents
     }
 
