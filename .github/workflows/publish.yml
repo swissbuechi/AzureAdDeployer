@@ -1,0 +1,16 @@
+name: Publish PowerShell module
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish-to-gallery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Publish
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        shell: pwsh
+        run: Publish-Module -Path ./ -NuGetApiKey $env:NUGET_KEY -Verbose
