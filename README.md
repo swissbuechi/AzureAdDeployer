@@ -59,7 +59,11 @@
 
 ### Update via PowerShellGallery
 
-`Update-Module -Name AzureAdDeployer -Scope AllUsers`
+```PowerShell
+Update-Module -Name AzureAdDeployer -Scope AllUsers
+$Latest = Get-InstalledModule AzureAdDeployer; 
+Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
+```
 
 ### Uninstall via PowerShellGallery
 
