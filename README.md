@@ -89,6 +89,26 @@ Update-Module -Name ExchangeOnlineManagement -Scope AllUsers
 Update-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
 ```
 
+## Usage
+
+### Interactive GUI
+
+`Invoke-AzureAdDeployer`
+
+Alias: `aaddepl`
+
+### Azure Active Directory + Exchange Online HTML report
+
+`aaddepl -AddExchangeOnlineReport`
+
+### Create a BreakGlass account
+
+`aaddepl -CreateBreakGlassAccount`
+
+### Disable Security Defaults
+
+`aaddepl -DisableSecurityDefaults`
+
 ## Features
 
 ### General
@@ -177,26 +197,6 @@ Update-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
 | `-KeepGraphSessionAlive`   | Do not disconnect the Graph SDK PowerShell session after execution       |
 | `-KeepSpoSessionAlive`     | Do not disconnect the SharePoint Online session after execution          |
 | `-KeepExoSessionAlive`     | Do not disconnect the Exchange Online PowerShell session after execution |
-
-## Usage
-
-### Interactive GUI
-
-`Invoke-AzureAdDeployer`
-
-Alias: `aaddepl`
-
-### Azure Active Directory + Exchange Online HTML report
-
-`aaddepl -AddExchangeOnlineReport`
-
-### Create a BreakGlass account
-
-`aaddepl -CreateBreakGlassAccount`
-
-### Disable Security Defaults
-
-`aaddepl -DisableSecurityDefaults`
 
 ## Upcoming Features
 
