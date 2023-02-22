@@ -7,7 +7,7 @@ function Install-DesktopIcon {
     New-DesktopShortcut -ShortcutTargetPath 'powershell.exe' -ShortcutDisplayName 'AzureAdDeployer' -ShortcutArguments '-noexit -ExecutionPolicy Bypass -Command "Invoke-AzureAdDeployer"' -IconFile (Get-IconPath) -PinToStart
 }
 function Get-IconPath {
-    $Path = (Get-Module -ListAvailable -Name "AzureAdDeployer").Path
-    $Directory = (Get-Item $Path).DirectoryName
-    return "$Directory\logo\logo.ico"
+    $Path = (Get-InstalledModule "AzureAdDeployer").InstalledLocation
+    $Path = $Path -replace ('\\', '\')
+    return "$($Path)\logo\logo.ico"
 }
