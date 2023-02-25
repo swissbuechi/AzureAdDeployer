@@ -150,7 +150,7 @@ function Invoke-AzureAdDeployer {
     $ReportTitleHtml = "<h1>" + $ReportTitle + "</h1>"
     $ReportName = ("Microsoft365-Report-$($script:CustomerName).html").Replace(" ", "")
     $PostContentHtml = @"
-<a id='FootNote' href="$($Repository)">$($script:VersionMessage)</a>
+<a id='FootNote' href="$($Repository)" target="blank">$($script:VersionMessage)</a>
 <p id='FootNote'>Creation date: $(Get-Date -Format "dd.MM.yyyy HH:mm")</p>
 "@
     Write-Host "Generating HTML report:" $ReportName
