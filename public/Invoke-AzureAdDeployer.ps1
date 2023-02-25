@@ -24,11 +24,12 @@ function Invoke-AzureAdDeployer {
         [switch]$EnableSharedMailboxCopyToSent,
         [switch]$HideUnifiedMailboxFromOutlookClient,
         [switch]$DisableAddToOneDrive,
-        [switch]$InstallDesktopIcon
+        [switch]$InstallDesktopIcon,
+        [switch]$Version
     )
     $script:ReportTitle = "Microsoft 365 Security Report"
-    $Version = $script:ModuleInfos.ModuleVersion
-    $script:VersionMessage = "AzureAdDeployer version: $($Version)"
+    $VersionNumber = $script:ModuleInfos.ModuleVersion
+    $script:VersionMessage = "AzureAdDeployer version: $($VersionNumber)"
 
     $script:ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
 
@@ -62,6 +63,12 @@ function Invoke-AzureAdDeployer {
     $script:AddSharePointOnlineReport = $AddSharePointOnlineReport
 
     <# Script logic start section #>
+
+    if ($VersionNumber) {
+        Write-Host $VersionNumber
+        return
+    }
+
     if ($InstallDesktopIcon) { 
         Install-DesktopIcon 
         return

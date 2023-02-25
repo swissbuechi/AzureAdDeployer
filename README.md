@@ -204,6 +204,7 @@ Alias: `aaddepl`
 
 | Argument                   | Description                                                              |
 | -------------------------- | ------------------------------------------------------------------------ |
+| `-Version`                 | Display the version of AzureAdDeployer                                   |
 | `-InstallDesktopIcon`      | Create Desktop icon (Windows only)                                       |
 | `-UseExistingGraphSession` | Do not create a new Graph SDK PowerShell session                         |
 | `-UseExistingSpoSession`   | Do not create a new SharePoint Online PowerShell session                 |
