@@ -15,33 +15,32 @@
 
 <img src="./logo/logo.png"  width="200" height="200">
 
+## Example report
+
+[Microsoft365-Report-MSFT.html](https://github.com/swissbuechi/AzureAdDeployer/blob/main/doc/example-reports/Microsoft365-Report-MSFT.html)
+
 ## System requirements
 
 - Required PowerShell 5.1 or higher
 - Windows PowerShell and PowerShell Core (Windows, macOS, Linux) supported
-- Install required [Dependencies](#dependencies)
 
 ## Installation
 
 ### Install via PowerShellGallery (recommended)
 
-The module is published on the PowerShellGallery. You can install this module directly from the PowerShellGallery with the following command.
+The module is published on the PowerShellGallery. You can install this module directly from the PowerShellGallery with the following command
 
-As administrator:
+`Install-Module -Name AzureAdDeployer -Scope CurrentUser`
 
-`Install-Module -Name AzureAdDeployer -Scope AllUsers`
+Make sure you also install the required [dependencies](#install-dependencies)
 
 ### Create Desktop icon (Windows only)
 
 You need to recreate the Desktop icon after every update
 
-Run as user:
-
 `Invoke-AzureAdDeployer -InstallDesktopIcon`
 
 ### Update via PowerShellGallery
-
-As administrator:
 
 ```PowerShell
 Update-Module -Name AzureAdDeployer
@@ -49,11 +48,29 @@ $Latest = Get-InstalledModule AzureAdDeployer
 Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
 ```
 
-### Uninstall via PowerShellGallery
+### Uninstall
 
-`Uninstall-Module -Name AzureAdDeployer -Scope AllUsers`
+`Uninstall-Module -Name AzureAdDeployer -Scope CurrentUser`
 
 ## Dependencies
+
+### Install dependencies
+
+```PowerShell
+Install-Module -Name Microsoft.Graph -Scope CurrentUser
+Install-Module -Name PnP.PowerShell -Scope CurrentUser
+Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser
+Install-Module -Name DnsClient-PS -Scope CurrentUser #Only on Mac and Linux required
+```
+
+### Update dependencies
+
+```PowerShell
+Update-Module -Name Microsoft.Graph
+Update-Module -Name PnP.PowerShell
+Update-Module -Name ExchangeOnlineManagement
+Update-Module -Name DnsClient-PS #Only on Mac and Linux required
+```
 
 ### Uninstall previously installed dependencies (optional)
 
@@ -77,28 +94,6 @@ Uninstall-Module Microsoft.Graph.Authentication
 Uninstall-Module -Name PnP.PowerShell
 
 Uninstall-Module -Name ExchangeOnlineManagement
-```
-
-### Install dependencies
-
-As administrator:
-
-```PowerShell
-Install-Module -Name Microsoft.Graph -Scope AllUsers
-Install-Module -Name PnP.PowerShell -Scope AllUsers
-Install-Module -Name ExchangeOnlineManagement -Scope AllUsers
-Install-Module -Name DnsClient-PS -Scope AllUsers #Only on Mac and Linux required
-```
-
-### Update dependencies
-
-As administrator:
-
-```PowerShell
-Update-Module -Name Microsoft.Graph
-Update-Module -Name PnP.PowerShell
-Update-Module -Name ExchangeOnlineManagement
-Update-Module -Name DnsClient-PS #Only on Mac and Linux required
 ```
 
 ## Usage
