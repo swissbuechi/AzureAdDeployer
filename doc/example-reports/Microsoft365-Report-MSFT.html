@@ -1,0 +1,890 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Microsoft 365 Security Report</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3540/3540926.png">
+    <style>
+        html {
+            display: table;
+            margin: auto;
+        }
+
+        body {
+            display: table-cell;
+            vertical-align: middle;
+            padding-right: 200px;
+            padding-left: 200px;
+        }
+
+        h1 {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #666666;
+            font-size: 32px;
+        }
+
+        h2 {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #666666;
+            font-size: 24px;
+        }
+
+        h3 {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #666666;
+            font-size: 16px;
+
+        }
+
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+        }
+
+        a {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            text-decoration: none;
+            color: #666666;
+        }
+
+        ul {
+            list-style-type: none;
+            margin-top: 5px;
+        }
+
+        li {
+            padding: 5px;
+        }
+
+        table {
+            font-size: 14px;
+            border: 0px;
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            margin: 25px 0;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        th,
+        td {
+            padding: 4px;
+            margin: 0px;
+            border: 0;
+            padding: 12px 15px;
+        }
+
+        th {
+            background: #666666;
+            color: #fff;
+            font-size: 11px;
+            padding: 10px 15px;
+            vertical-align: middle;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f0f0f2;
+        }
+
+        thead tr {
+            color: #ffffff;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .TOC {
+            margin: 5px;
+        }
+
+        #FootNote {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #666666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Microsoft 365 Security Report</h1>
+    <h2>MSFT (95e891a1-33f3-4a03-8c92-a1f7e710b91f)</h2> <br>
+    <hr>
+    <h2>Contents</h2>
+    <h3 class='TOC'><a href="#AAD">Azure Active Directory</a></h3>
+    <ul>
+        <li><a href="#AAD_USER_SETTINGS">User settings</a></li>
+        <li><a href="#AAD_DEVICE_JOIN_SETTINGS">Device join settings</a></li>
+        <li><a href="#AAD_SKU">Licenses</a></li>
+        <li><a href="#AAD_ADMINS">Admin role assignments</a></li>
+        <li><a href="#AAD_BG">BreakGlass account</a></li>
+        <li><a href="#AAD_MFA">User MFA status</a></li>
+        <li><a href="#AAD_GUEST">Guest accounts</a></li>
+        <li><a href="#AAD_SEC_DEFAULTS">Security defaults</a></li>
+        <li><a href="#AAD_CA">Conditional access policies</a></li>
+        <li><a href="#AAD_CA_LOCATIONS">Named locations</a></li>
+        <li><a href="#AAD_APP_POLICY">App protection policies</a></li>
+    </ul>
+    <h3 class='TOC'><a href="#SPO">SharePoint Online</a></h3>
+    <ul>
+        <li><a href="#SPO_SETTINGS">Tenant settings</a></li>
+    </ul>
+    <h3 class='TOC'><a href="#EXO">Exchange Online</a></h3>
+    <ul>
+        <li><a href="#EXO_DOMAIN">Domains</a></li>
+        <li><a href="#EXO_CONNECTOR_IN">Inbound mail connector</a></li>
+        <li><a href="#EXO_CONNECTOR_OUT">Outbound mail connector</a></li>
+        <li><a href="#EXO_USER">User mailbox</a></li>
+        <li><a href="#EXO_SHARED">Shared mailbox</a></li>
+        <li><a href="#EXO_UNIFIED">Unified mailbox</a></li>
+    </ul>
+    <br>
+    <hr>
+    <h2 id='AAD'>Azure Active Directory</h2>
+    <h3 id='AAD_USER_SETTINGS'>User settings</h3>
+    <table>
+        <tr>
+            <td>PermissionGrantPoliciesAssigned:</td>
+            <td class='red'>microsoft-user-default-legacy</td>
+        </tr>
+        <tr>
+            <td>AllowedToCreateApps:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>AllowedToCreateSecurityGroups:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>AllowedToCreateUnifiedGroups:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>AllowedToCreateUnifiedGroupsGroupName:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>AllowedToReadOtherUsers:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>AllowedToCreateTenants:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>BlockMsolPowerShell:</td>
+            <td class='red'>False</td>
+        </tr>
+    </table>
+    <p>PermissionGrantPoliciesAssigned: empty (user consent not allowed), microsoft-user-default-legacy (user consent
+        allowed for all apps), microsoft-user-default-low (user consent allowed for low permission apps)</p>
+    <p>Unified groups = Microsoft 365 groups</p> <br>
+    <h3 id='AAD_DEVICE_JOIN_SETTINGS'>Device join settings</h3>
+    <table>
+        <tr>
+            <td>Require MFA:</td>
+            <td class='red'>False</td>
+        </tr>
+        <tr>
+            <td>Allowed to join:</td>
+            <td class='red'>All users</td>
+        </tr>
+        <tr>
+            <td>Users:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Groups:</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>userDeviceQuota:</td>
+            <td>50</td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_SKU'>Licenses</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>Name</th>
+            <th>Total</th>
+            <th>Assigned</th>
+            <th>Available</th>
+            <th>AppliesTo</th>
+        </tr>
+        <tr>
+            <td>DEVELOPERPACK_E5</td>
+            <td>25</td>
+            <td>17</td>
+            <td>8</td>
+            <td>User</td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_ADMINS'>Admin role assignments</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>UserPrincipalName</th>
+            <th>RoleName</th>
+        </tr>
+        <tr>
+            <td>Raphael B&#252;chi</td>
+            <td>sandboxadmin1@0jtvf.onmicrosoft.com</td>
+            <td>Global Administrator</td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_BG'>BreakGlass account</h3>
+    <p class='red'>Not found</p> <br>
+    <h3 id='AAD_MFA'>User MFA status</h3>
+    <table>
+        <colgroup>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>DisplayName</th>
+                <th>UserPrincipalName</th>
+                <th>LicenseStatus</th>
+                <th>AccountEnabled</th>
+                <th>MFAStatus</th>
+                <th>AdditionalDetail</th>
+            </tr>
+            <tr>
+                <td>Adele Vance</td>
+                <td>AdeleV@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Alex Wilber</td>
+                <td>AlexW@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Diego Siciliani</td>
+                <td>DiegoS@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Grady Archie</td>
+                <td>GradyA@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>help</td>
+                <td>help@0jtvf.onmicrosoft.com</td>
+                <td>Unlicensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Henrietta Mueller</td>
+                <td>HenriettaM@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>info</td>
+                <td>info@0jtvf.onmicrosoft.com</td>
+                <td>Unlicensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Isaiah Langer</td>
+                <td>IsaiahL@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Johanna Lorenz</td>
+                <td>JohannaL@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Joni Sherman</td>
+                <td>JoniS@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Lee Gu</td>
+                <td>LeeG@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Lidia Holloway</td>
+                <td>LidiaH@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Lynne Robbins</td>
+                <td>LynneR@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>marketing</td>
+                <td>marketing@0jtvf.onmicrosoft.com</td>
+                <td>Unlicensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Megan Bowen</td>
+                <td>MeganB@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Miriam Graham</td>
+                <td>MiriamG@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Nestor Wilke</td>
+                <td>NestorW@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Patti Fernandez</td>
+                <td>PattiF@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Pradeep Gupta</td>
+                <td>PradeepG@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>sales</td>
+                <td>sales@0jtvf.onmicrosoft.com</td>
+                <td>Unlicensed</td>
+                <td>True</td>
+                <td class="red">Disabled</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Raphael Büchi</td>
+                <td>sandboxadmin1@0jtvf.onmicrosoft.com</td>
+                <td>Licensed</td>
+                <td>True</td>
+                <td>Strong</td>
+                <td>SoftwareOath: Third party OTP app</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Weak: PhoneAuthentication, EmailAuthentication</p>
+    <p>Strong: Fido2, PasswordlessMSAuthenticator, AuthenticatorApp, WindowsHelloForBusiness, SoftwareOath</p> <br>
+    <h3 id='AAD_GUEST'>Guest accounts</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>UserPrincipalName</th>
+            <th>AccountEnabled</th>
+            <th>LastSignIn</th>
+        </tr>
+        <tr>
+            <td>Chris Green</td>
+            <td>chris.green_contoso.com#EXT#@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td></td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_SEC_DEFAULTS'>Security defaults</h3>
+    <p>Enabled</p> <br>
+    <h3 id='AAD_CA'>Conditional access policies</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>Id</th>
+            <th>State</th>
+        </tr>
+        <tr>
+            <td>Require MFA or trusted device from all untrusted locations</td>
+            <td>1327062f-8e1e-494e-83d1-ce64b7d2398f</td>
+            <td>enabledForReportingButNotEnforced</td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_CA_LOCATIONS'>Named locations</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>Trusted</th>
+            <th>IPRange</th>
+            <th>Countries</th>
+        </tr>
+        <tr>
+            <td>main office LA</td>
+            <td>True</td>
+            <td>126.213.42.0/30 18.54.1.16/32</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>risky countries example</td>
+            <td></td>
+            <td></td>
+            <td>CH CY CA AT</td>
+        </tr>
+        <tr>
+            <td>example crm vendor cloud plattform</td>
+            <td>False</td>
+            <td>40.77.15.64/29</td>
+            <td></td>
+        </tr>
+    </table> <br>
+    <h3 id='AAD_APP_POLICY'>App protection policies</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>IsAssigned</th>
+        </tr>
+        <tr>
+            <td>Protect company data on personal iOS devices</td>
+            <td>False</td>
+        </tr>
+    </table> <br>
+    <hr>
+    <h2 id='SPO'>SharePoint Online</h2>
+    <h3 id='SPO_SETTINGS'>Tenant settings</h3>
+    <table>
+        <tr>
+            <td>LegacyAuthProtocolsEnabled:</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>DisableAddToOneDrive:</td>
+            <td class='red'>False</td>
+        </tr>
+        <tr>
+            <td>ConditionalAccessPolicy:</td>
+            <td class='red'>AllowFullAccess</td>
+        </tr>
+        <tr>
+            <td>SharingCapability:</td>
+            <td class='red'>ExternalUserAndGuestSharing</td>
+        </tr>
+        <tr>
+            <td>ODBMembersCanShare:</td>
+            <td>Unspecified</td>
+        </tr>
+        <tr>
+            <td>PreventExternalUsersFromResharing:</td>
+            <td class='red'>False</td>
+        </tr>
+        <tr>
+            <td>DefaultSharingLinkType:</td>
+            <td class='red'>AnonymousAccess</td>
+        </tr>
+        <tr>
+            <td>DefaultLinkPermission:</td>
+            <td>None</td>
+        </tr>
+        <tr>
+            <td>FolderAnonymousLinkType:</td>
+            <td>Edit</td>
+        </tr>
+        <tr>
+            <td>FileAnonymousLinkType:</td>
+            <td>Edit</td>
+        </tr>
+        <tr>
+            <td>RequireAnonymousLinksExpireInDays:</td>
+            <td>-1</td>
+        </tr>
+    </table>
+    <p>ConditionalAccessPolicy: AllowFullAccess, AllowLimitedAccess, BlockAccess</p>
+    <p>SharingCapability: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing,
+        ExistingExternalUserSharingOnly</p>
+    <p>DefaultSharingLinkType: None, Direct, Internal, AnonymousAccess</p>
+    <br>
+    <hr>
+    <h2 id='EXO'>Exchange Online</h2>
+    <h3 id='EXO_DOMAIN'>Domains</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>Id</th>
+            <th>DKIM</th>
+            <th>DMARC</th>
+            <th>SPF</th>
+            <th>DMARC record</th>
+            <th>SPF record</th>
+            <th>DMARC hint</th>
+            <th>SPF hint</th>
+            <th>Default</th>
+        </tr>
+        <tr>
+            <td>0jtvf.onmicrosoft.com</td>
+            <td class='red'>False</td>
+            <td class='red'>False</td>
+            <td>True</td>
+            <td></td>
+            <td>v=spf1 include:spf.protection.outlook.com -all</td>
+            <td></td>
+            <td>Sufficiently strict</td>
+            <td>True</td>
+        </tr>
+    </table> <br>
+    <h3 id='EXO_CONNECTOR_IN'>Inbound mail connector</h3>
+    <p>Not found</p> <br>
+    <h3 id='EXO_CONNECTOR_OUT'>Outbound mail connector</h3>
+    <p>Not found</p> <br>
+    <h3 id='EXO_USER'>User mailbox</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>UserPrincipalName</th>
+            <th>DisplayName</th>
+            <th>Language</th>
+            <th>TimeZone</th>
+            <th>LoginAllowed</th>
+        </tr>
+        <tr>
+            <td>JoniS@0jtvf.onmicrosoft.com</td>
+            <td>Joni Sherman</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>GradyA@0jtvf.onmicrosoft.com</td>
+            <td>Grady Archie</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>LeeG@0jtvf.onmicrosoft.com</td>
+            <td>Lee Gu</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>MiriamG@0jtvf.onmicrosoft.com</td>
+            <td>Miriam Graham</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>AlexW@0jtvf.onmicrosoft.com</td>
+            <td>Alex Wilber</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>NestorW@0jtvf.onmicrosoft.com</td>
+            <td>Nestor Wilke</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>DiegoS@0jtvf.onmicrosoft.com</td>
+            <td>Diego Siciliani</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>IsaiahL@0jtvf.onmicrosoft.com</td>
+            <td>Isaiah Langer</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>MeganB@0jtvf.onmicrosoft.com</td>
+            <td>Megan Bowen</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>JohannaL@0jtvf.onmicrosoft.com</td>
+            <td>Johanna Lorenz</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>PattiF@0jtvf.onmicrosoft.com</td>
+            <td>Patti Fernandez</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>HenriettaM@0jtvf.onmicrosoft.com</td>
+            <td>Henrietta Mueller</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>LidiaH@0jtvf.onmicrosoft.com</td>
+            <td>Lidia Holloway</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>PradeepG@0jtvf.onmicrosoft.com</td>
+            <td>Pradeep Gupta</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>sandboxadmin1@0jtvf.onmicrosoft.com</td>
+            <td>Raphael B&#252;chi</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>LynneR@0jtvf.onmicrosoft.com</td>
+            <td>Lynne Robbins</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>AdeleV@0jtvf.onmicrosoft.com</td>
+            <td>Adele Vance</td>
+            <td></td>
+            <td></td>
+            <td>True</td>
+        </tr>
+    </table> <br>
+    <h3 id='EXO_SHARED'>Shared mailbox</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>UserPrincipalName</th>
+            <th>DisplayName</th>
+            <th>Language</th>
+            <th>TimeZone</th>
+            <th>MessageCopyForSentAsEnabled</th>
+            <th>MessageCopyForSendOnBehalfEnabled</th>
+            <th>LoginAllowed</th>
+        </tr>
+        <tr>
+            <td>help@0jtvf.onmicrosoft.com</td>
+            <td>help</td>
+            <td></td>
+            <td></td>
+            <td>False</td>
+            <td>False</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>info@0jtvf.onmicrosoft.com</td>
+            <td>info</td>
+            <td></td>
+            <td></td>
+            <td>False</td>
+            <td>False</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>marketing@0jtvf.onmicrosoft.com</td>
+            <td>marketing</td>
+            <td></td>
+            <td></td>
+            <td>False</td>
+            <td>False</td>
+            <td class='red'>True</td>
+        </tr>
+        <tr>
+            <td>sales@0jtvf.onmicrosoft.com</td>
+            <td>sales</td>
+            <td></td>
+            <td></td>
+            <td>False</td>
+            <td>False</td>
+            <td class='red'>True</td>
+        </tr>
+    </table> <br>
+    <h3 id='EXO_UNIFIED'>Unified mailbox</h3>
+    <table>
+        <colgroup>
+            <col />
+            <col />
+            <col />
+            <col />
+        </colgroup>
+        <tr>
+            <th>DisplayName</th>
+            <th>PrimarySmtpAddress</th>
+            <th>HiddenFromAddressListsEnabled</th>
+            <th>HiddenFromExchangeClientsEnabled</th>
+        </tr>
+        <tr>
+            <td>Digital Initiative Public Relations</td>
+            <td>DigitalInitiativePublicRelations514@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>Mark 8 Project Team</td>
+            <td>Mark8ProjectTeam796@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>Retail</td>
+            <td>Retail@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>Sales and Marketing</td>
+            <td>SalesandMarketing@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+        <tr>
+            <td>Sample Team Site</td>
+            <td>SampleTeamSite@0jtvf.onmicrosoft.com</td>
+            <td>False</td>
+            <td>False</td>
+        </tr>
+        <tr>
+            <td>U.S. Sales</td>
+            <td>U.S.Sales@0jtvf.onmicrosoft.com</td>
+            <td>True</td>
+            <td>True</td>
+        </tr>
+    </table>
+    <p>Unified groups = Microsoft 365 groups</p>
+    <table>
+    </table>
+    <p id='FootNote'>AzureAdDeployer version: 2.15.9</p>
+    <p id='FootNote'>Creation date: 25.02.2023 09:58</p>
+</body>
+
+</html>

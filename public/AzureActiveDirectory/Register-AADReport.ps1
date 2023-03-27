@@ -417,11 +417,12 @@ function Get-UserMfaStatusReport {
                 }
                 "#microsoft.graph.softwareOathAuthenticationMethod" {
                     $AuthMethod = 'SoftwareOath'
+                    $AuthMethodDetails = 'Third-party OTP app'
                 }
             }
             $AuthenticationMethod += $AuthMethod
             if ($null -ne $AuthMethodDetails) {
-                $AdditionalDetails += "$AuthMethod : $AuthMethodDetails"
+                $AdditionalDetails += "$($AuthMethod): $AuthMethodDetails"
             }
         }
         $AuthenticationMethod = $AuthenticationMethod | Sort-Object | Get-Unique
