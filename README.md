@@ -17,7 +17,7 @@
 
 ## Example report
 
-[Microsoft365-Report-MSFT.html](https://github.com/swissbuechi/AzureAdDeployer/blob/main/doc/example-reports/Microsoft365-Report-MSFT.html)
+[Microsoft365-Report-MSFT.html](https://htmlpreview.github.io/?https://github.com/swissbuechi/AzureAdDeployer/blob/main/doc/example-reports/Microsoft365-Report-MSFT.html)
 
 ## System requirements
 
