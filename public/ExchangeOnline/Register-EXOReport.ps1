@@ -28,8 +28,7 @@ function Get-MailDomainReport {
 }
 function Get-DMARC {
     param($Domain)
-    if ($PSVersionTable.Platform -eq "Unix") { $DMARCRecord = (Resolve-Dns -Query "_dmarc.$($Domain.Id)" -QueryType TXT | Select-Object -Expand Answers).Text }
-    else { $DMARCRecord = Resolve-DnsName -Name "_dmarc.$($Domain.Id)" -Type TXT -ErrorAction SilentlyContinue | Select-Object -ExpandProperty strings }
+    $DMARCRecord = (Resolve-Dns -Query "_dmarc.$($Domain.Id)" -QueryType TXT | Select-Object -Expand Answers).Text
     if ($null -eq $DMARCRecord ) {
         $DMARC = $false
     }
@@ -68,13 +67,11 @@ function Get-DMARC {
 }
 function Get-SPF {
     param($Domain)
-    if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $Domain.Id -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" } }
-    else { $SPFRecord = Resolve-DnsName -Name $Domain.Id -Type TXT -ErrorAction SilentlyContinue | Where-Object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
+    $SPFRecord = (Resolve-Dns -Query $Domain.Id -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" }
     if ($SPFRecord -match "redirect") {
         $redirect = $SPFRecord.Split(" ")
         $RedirectName = $redirect -match "redirect" -replace "redirect="
-        if ($PSVersionTable.Platform -eq "Unix") { $SPFRecord = (Resolve-Dns -Query $RedirectName -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" } }
-        else { $SPFRecord = Resolve-DnsName -Name $RedirectName -Type TXT -ErrorAction SilentlyContinue | Where-Object { $_.strings -match "v=spf1" } | Select-Object -ExpandProperty strings }
+        $SPFRecord = (Resolve-Dns -Query $RedirectName -QueryType TXT | Select-Object -Expand Answers).Text | Where-Object { $_ -match "v=spf1" }
     }
     if ($null -eq $SPFRecord) {
         $SPF = $false
