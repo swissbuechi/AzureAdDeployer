@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - name: Install dependencies
-      #   shell: pwsh
-      #   run: | 
-      #     Install-Module -Name Microsoft.Graph -Force
-      #     Install-Module -Name PnP.PowerShell -Force
-      #     Install-Module -Name ExchangeOnlineManagement -Force
+      - name: Install dependencies
+        shell: pwsh
+        run: | 
+          # Install-Module -Name Microsoft.Graph -MinimumVersion 1.22.0 -Force
+          Install-Module -Name PnP.PowerShell -MinimumVersion 2.1.1 -Force
+          Install-Module -Name ExchangeOnlineManagement -MinimumVersion 3.1.0 -Force
+          Install-Module -Name DnsClient-PS -MinimumVersion 1.1.0 -Force
       - name: Publish
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
