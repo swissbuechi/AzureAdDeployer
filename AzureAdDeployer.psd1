@@ -50,6 +50,20 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
+    RequiredModules      = @( @{
+            ModuleName    = "PnP.PowerShell"; 
+            ModuleVersion = "2.1.1"; 
+            Guid          = "0b0430ce-d799-4f3b-a565-f0dca1f31e17"
+        }, @{
+            ModuleName    = "ExchangeOnlineManagement"; 
+            ModuleVersion = "3.1.0"; 
+            Guid          = "b5eced50-afa4-455b-847a-d8fb64140a22"
+        }, @{
+            ModuleName    = "DnsClient-PS"; 
+            ModuleVersion = "1.1.0"; 
+            Guid          = "698438cc-f80d-4b88-aa04-16e302c1f326"
+        })
+    
     # RequiredModules      = @( 'Microsoft.Graph.Authentication', 'Microsoft.Graph.Users', 'Microsoft.Graph.Identity.DirectoryManagement', 'Microsoft.Graph.DeviceManagement.Enrolment', 'Microsoft.Graph.Identity.SignIns', 'Microsoft.Graph.Devices.CorporateManagement', 'ExchangeOnlineManagement', 'PnP.PowerShell')
 
     # Assemblies that must be loaded prior to importing this module
