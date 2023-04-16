@@ -1,6 +1,6 @@
 function Connect-SPOSession {
     # if (Request-SPOSession) { Disconnect-SPOSession }
-    Disconnect-SPOSession | Out-Null
+    Disconnect-SPOSession
     Write-Host "Connecting SharePoint Online PowerShell"
     Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser
     if ( -not (Request-SPOSession)) { return }
@@ -10,7 +10,11 @@ function Get-SPOAdminURL {
 }
 function Disconnect-SPOSession {
     Write-Host "Disconnecting existing SharePoint Online PowerShell"
-    Disconnect-PnPOnline -ErrorAction SilentlyContinue
+    try {
+        Disconnect-PnPOnline -ErrorAction SilentlyContinue | Out-Null
+    }
+    catch {
+    }
 }
 function Request-SPOSession {
     if (Get-PnPConnection) {

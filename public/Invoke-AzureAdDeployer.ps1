@@ -155,7 +155,7 @@ function Invoke-AzureAdDeployer {
 "@
     Write-Host "Generating HTML report:" $ReportName
     $Report = ConvertTo-Html -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head (Get-Header) -PostContent $PostContentHtml
-    $Report | Out-File $Desktop\$ReportName
+    $Report | Out-File $Desktop\$ReportName -Force
     Invoke-Item $Desktop\$ReportName
     if ($script:InteractiveMode) { Read-Host "Click [ENTER] key to exit AzureAdDeployer" }
 }
