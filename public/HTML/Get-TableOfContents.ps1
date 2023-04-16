@@ -31,7 +31,7 @@ function Get-EXOTableOfContents {
        <li><a href="#EXO_DOMAIN">Domains</a></li>
        <li><a href="#EXO_CONNECTOR_IN">Inbound mail connector</a></li>
        <li><a href="#EXO_CONNECTOR_OUT">Outbound mail connector</a></li>
-       <li><a href="#EXO_USER">User mailbox</a></li>
+       <!-- <li><a href="#EXO_USER">User mailbox</a></li> -->
        <li><a href="#EXO_SHARED">Shared mailbox</a></li>
        <li><a href="#EXO_UNIFIED">Unified mailbox</a></li>
    </ul>

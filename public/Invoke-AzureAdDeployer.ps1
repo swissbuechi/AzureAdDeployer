@@ -127,7 +127,7 @@ function Invoke-AzureAdDeployer {
         Write-Host "Exchange Online"
         $Report += Get-MailDomainReport
         $Report += Get-MailConnectorReport
-        $Report += Get-UserMailboxReport -Language $script:SetMailboxLanguage
+        # $Report += Get-UserMailboxReport -Language $script:SetMailboxLanguage
         $Report += Get-SharedMailboxReport -Language $script:SetMailboxLanguage -DisableLogin $script:DisableSharedMailboxLogin -EnableCopy $script:EnableSharedMailboxCopyToSent
         $Report += Get-UnifiedMailboxReport -HideFromClient $script:HideUnifiedMailboxFromOutlookClient
     }
