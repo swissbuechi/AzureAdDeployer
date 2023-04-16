@@ -7,7 +7,6 @@
 #
 
 @{
-
     # Script module or binary module file associated with this manifest.
     RootModule           = 'AzureAdDeployer.psm1'
 
@@ -15,7 +14,7 @@
     ModuleVersion        = '2.15.10'
 
     # Supported PSEditions
-    CompatiblePSEditions = @("Desktop", "Core")
+    CompatiblePSEditions = @("Core")
 
     # ID used to uniquely identify this module
     GUID                 = 'e593e49f-6626-422e-a2fe-5cdc72121a9a'
@@ -33,7 +32,7 @@
     Description          = 'Tool to analyze and remediate Microsoft 365 according to current security best practices'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion    = '5.1'
+    PowerShellVersion    = '6.0'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -91,9 +90,8 @@
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
     PrivateData          = @{
-
         PSData = @{
-
+            
             # Tags applied to this module. These help with module discovery in online galleries.
             Tags                     = 'azureactivedirectory', 'sharepoint-online', 'exchangeonline'
 
@@ -127,6 +125,4 @@
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
-
 }
-

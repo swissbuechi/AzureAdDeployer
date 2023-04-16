@@ -21,8 +21,7 @@
 
 ## System requirements
 
-- Required PowerShell 5.1 or higher
-- Windows PowerShell and PowerShell Core (Windows, macOS, Linux) supported
+- Required PowerShell Core 6.0 or higher
 
 ## Installation
 
@@ -30,7 +29,7 @@
 
 The module is published on the PowerShellGallery. You can install this module directly from the PowerShellGallery with the following command
 
-`Install-Module -Name AzureAdDeployer -Scope CurrentUser`
+`Install-Module -Name AzureAdDeployer -Scope CurrentUser -Force`
 
 Make sure you also install the required [dependencies](#install-dependencies)
 
@@ -57,43 +56,19 @@ Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version
 ### Install dependencies
 
 ```PowerShell
-Install-Module -Name Microsoft.Graph -Scope CurrentUser
-Install-Module -Name PnP.PowerShell -Scope CurrentUser
-Install-Module -Name ExchangeOnlineManagement -Scope CurrentUser
-Install-Module -Name DnsClient-PS -Scope CurrentUser #Only on Mac and Linux required
+Install-Module -Name Microsoft.Graph -MinimumVersion 1.22.0 -Scope CurrentUser -Force
+Install-Module -Name PnP.PowerShell -MinimumVersion 2.1.1 -Scope CurrentUser -Force
+Install-Module -Name ExchangeOnlineManagement -MinimumVersion 3.1.0 -Scope CurrentUser -Force
+Install-Module -Name DnsClient-PS -MinimumVersion 1.1.0 -Scope CurrentUser -Force
 ```
 
 ### Update dependencies
 
 ```PowerShell
-Update-Module -Name Microsoft.Graph
-Update-Module -Name PnP.PowerShell
-Update-Module -Name ExchangeOnlineManagement
-Update-Module -Name DnsClient-PS #Only on Mac and Linux required
-```
-
-### Uninstall previously installed dependencies (optional)
-
-As user:
-
-```PowerShell
-$Documents = [Environment]::GetFolderPath("MyDocuments") 
-Remove-Item $Documents\PowerShell\Modules\ -Recurse -Force
-Remove-Item $Documents\WindowsPowerShell\Modules\ -Recurse -Force
-```
-
-As administrator:
-
-```PowerShell
-Uninstall-Module -Name Microsoft365DSC
-
-Uninstall-Module Microsoft.Graph
-Get-InstalledModule Microsoft.Graph.* | %{ if($_.Name -ne "Microsoft.Graph.Authentication"){ Uninstall-Module $_.Name } }
-Uninstall-Module Microsoft.Graph.Authentication
-
-Uninstall-Module -Name PnP.PowerShell
-
-Uninstall-Module -Name ExchangeOnlineManagement
+Update-Module -Name Microsoft.Graph -Force
+Update-Module -Name PnP.PowerShell -Force
+Update-Module -Name ExchangeOnlineManagement -Force
+Update-Module -Name DnsClient-PS -Force
 ```
 
 ## Usage

@@ -1,9 +1,8 @@
 function Connect-SPOSession {
     # if (Request-SPOSession) { Disconnect-SPOSession }
-    Disconnect-SPOSession
+    Disconnect-SPOSession | Out-Null
     Write-Host "Connecting SharePoint Online PowerShell"
-    if ($PSVersionTable.PSEdition -eq "Core") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser }
-    if ($PSVersionTable.PSEdition -eq "Desktop") { Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive }
+    Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser
     if ( -not (Request-SPOSession)) { return }
 }
 function Get-SPOAdminURL {
