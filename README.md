@@ -42,9 +42,7 @@ You need to recreate the Desktop icon after every update
 ### Update via PowerShellGallery
 
 ```PowerShell
-Update-Module -Name AzureAdDeployer
-$Latest = Get-InstalledModule AzureAdDeployer
-Get-InstalledModule $ModuleName -AllVersions | ? {$_.Version -ne $Latest.Version} | Uninstall-Module
+Update-Module -Name AzureAdDeployer -Force
 ```
 
 ### Uninstall
