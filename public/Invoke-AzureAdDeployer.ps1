@@ -30,7 +30,7 @@ function Invoke-AzureAdDeployer {
     )
     $script:ReportTitle = "Microsoft 365 Security Report"
     $VersionNumber = $script:ModuleInfos.ModuleVersion
-    $script:VersionMessage = "AzureAdDeployer version: $($VersionNumber)"
+    $script:VersionMessage = "AzureAdDeployer $($VersionNumber)"
     $Repository = "https://github.com/swissbuechi/AzureAdDeployer"
 
     $script:ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
