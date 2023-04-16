@@ -146,12 +146,13 @@ function Invoke-AzureAdDeployer {
     }
 
     <# HTML report section #>
+    $Date = Get-Date
     $Desktop = [Environment]::GetFolderPath("Desktop")
     $ReportTitleHtml = "<h1>" + $ReportTitle + "</h1>"
-    $ReportName = ("Microsoft365-Report-$($script:CustomerName).html").Replace(" ", "")
+    $ReportName = ("Microsoft365-Report-$($script:CustomerName)-$(Get-Date -Date $Date -Format 'yyyyMMddHHmm').html").Replace(" ", "")
     $PostContentHtml = @"
 <a id='FootNote' href="$($Repository)" target="blank">$($script:VersionMessage)</a>
-<p id='FootNote'>Creation date: $(Get-Date -Format "dd.MM.yyyy HH:mm")</p>
+<p id='FootNote'>Creation date: $(Get-Date -Date $Date -Format "dd.MM.yyyy HH:mm")</p>
 "@
     Write-Host "Generating HTML report:" $ReportName
     $Report = ConvertTo-Html -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head (Get-Header) -PostContent $PostContentHtml
