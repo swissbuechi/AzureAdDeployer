@@ -55,18 +55,12 @@ Update-Module -Name AzureAdDeployer -Force
 
 ```PowerShell
 Install-Module -Name Microsoft.Graph -MinimumVersion 1.22.0 -Scope CurrentUser -Force
-Install-Module -Name PnP.PowerShell -MinimumVersion 2.1.1 -Scope CurrentUser -Force
-Install-Module -Name ExchangeOnlineManagement -MinimumVersion 3.1.0 -Scope CurrentUser -Force
-Install-Module -Name DnsClient-PS -MinimumVersion 1.1.0 -Scope CurrentUser -Force
 ```
 
 ### Update dependencies
 
 ```PowerShell
 Update-Module -Name Microsoft.Graph -Force
-Update-Module -Name PnP.PowerShell -Force
-Update-Module -Name ExchangeOnlineManagement -Force
-Update-Module -Name DnsClient-PS -Force
 ```
 
 ## Usage
