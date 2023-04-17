@@ -29,19 +29,20 @@ function Invoke-AzureAdDeployer {
         [switch]$Help
     )
     $script:ReportTitle = "Microsoft 365 Security Report"
-    $VersionNumber = $script:ModuleInfos.ModuleVersion
-    $script:VersionMessage = "AzureAdDeployer $($VersionNumber)"
-    $Repository = "https://github.com/swissbuechi/AzureAdDeployer"
+    $ModuleVersion = $script:ModuleInfos.ModuleVersion
+    $ModuleName = $script:ModuleInfos.RootModule.Replace(".psm1", "")
+    $script:VersionMessage = "$ModuleName $ModuleVersion"
+    $Repository = $script:ModuleInfos.PrivateData.PSData.ProjectUri
+    $LicenseUri = $script:ModuleInfos.PrivateData.PSData.LicenseUri
+    $Copyright = $script:ModuleInfos.Copyright
 
-    $script:ReportImageUrl = "https://cdn-icons-png.flaticon.com/512/3540/3540926.png"
+    $script:ReportImageUrl = $script:ModuleInfos.PrivateData.PSData.IconUri
 
     $script:InteractiveMode = $false
     $script:MailboxLanguageCode = "de-CH"
     $script:MailboxTimeZone = "W. Europe Standard Time"
 
     $script:UnifiedGroupCreationAllowedGroupName = "M365_GROUP_CREATORS"
-
-    $script:CustomerName = ""
 
     $script:CreateBreakGlassAccount = $CreateBreakGlassAccount
     $script:EnableSecurityDefaults = $EnableSecurityDefaults
@@ -66,7 +67,7 @@ function Invoke-AzureAdDeployer {
 
     <# Script logic start section #>
     if ($Version) {
-        Write-Host $VersionNumber
+        Write-Host $ModuleVersion
         return
     }
     if ($Help) {
@@ -151,13 +152,14 @@ function Invoke-AzureAdDeployer {
     $ReportTitleHtml = "<h1>" + $ReportTitle + "</h1>"
     $ReportName = ("Microsoft365-Report-$($script:CustomerName)-$(Get-Date -Date $Date -Format 'yyyyMMddHHmm').html").Replace(" ", "")
     $PostContentHtml = @"
-<a id='FootNote' href="$($Repository)" target="blank">$($script:VersionMessage)</a>
+<a id='FootNote' href="$($Repository)" target="blank">$($script:VersionMessage)</a><br>
+<a id='FootNote' href="$($LicenseUri)" target="blank">$($Copyright)</a>
 <p id='FootNote'>Creation date: $(Get-Date -Date $Date -Format "dd.MM.yyyy HH:mm")</p>
 "@
     Write-Host "Generating HTML report:" $ReportName
     $Report = ConvertTo-Html -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head (Get-Header) -PostContent $PostContentHtml
     $Report | Out-File $Desktop\$ReportName -Force
     Invoke-Item $Desktop\$ReportName
-    if ($script:InteractiveMode) { Read-Host "Click [ENTER] key to exit AzureAdDeployer" }
+    if ($script:InteractiveMode) { Read-Host "Click [ENTER] key to exit $ModuleName" }
 }
 Set-Alias aaddepl -Value Invoke-AzureAdDeployer
