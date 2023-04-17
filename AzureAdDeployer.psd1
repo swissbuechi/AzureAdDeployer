@@ -11,7 +11,7 @@
     RootModule           = 'AzureAdDeployer.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '2.16.0'
+    ModuleVersion        = '2.16.1'
 
     # Supported PSEditions
     CompatiblePSEditions = @("Core")
