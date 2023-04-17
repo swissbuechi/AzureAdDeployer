@@ -21,7 +21,7 @@
 
 ## System requirements
 
-- Required PowerShell Core 6.0 or higher
+- Requires PowerShell Core 6.0 or higher
 
 ## Installation
 
