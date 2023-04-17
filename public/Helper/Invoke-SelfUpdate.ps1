@@ -97,8 +97,7 @@ Function Compare-Module {
 
 Function Get-ModuleUpdateNeeded {
     $script:ModuleUpdate = Compare-Module -Name $script:ModuleName
-    # return $script:ModuleUpdate.UpdateNeeded
-    return $true
+    return $script:ModuleUpdate.UpdateNeeded
 }
 Function Get-ModuleUpdateMessageCLI {
     Write-Host "Update available! $script:ModuleName from $script:ModuleVersion to $($script:ModuleUpdate.OnlineVersion)" -ForegroundColor Yellow
