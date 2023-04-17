@@ -54,7 +54,7 @@ Update-Module -Name AzureAdDeployer -Force
 ### Install dependencies
 
 ```PowerShell
-Install-Module -Name Microsoft.Graph -MinimumVersion 1.22.0 -Scope CurrentUser -Force
+Install-Module -Name Microsoft.Graph -MinimumVersion 1.25.0 -Scope CurrentUser -Force
 ```
 
 ### Update dependencies
