@@ -87,9 +87,10 @@ Alias: `aaddepl`
 
 ### General
 
-- Generates a HTML report to your desktop called `Microsoft365-Report-<customer_name>.html`
+- Generates a HTML report to your desktop called `Microsoft365-Report-<customer_name>-<date_time>.html`
 - Interactive console interface
 - Create Desktop icon (Windows only)
+- Automatic update check
 
 ### Azure Active Directory
 
@@ -133,18 +134,19 @@ Alias: `aaddepl`
 
 ### Azure Active directory
 
-| Argument                                  | Description                                    |
-| ----------------------------------------- | ---------------------------------------------- |
-| `-CreateBreakGlassAccount`                | Create a BreakGlass Account if no one is found |
-| `-EnableSecurityDefaults`                 | Enable security defaults                       |
-| `-DisableSecurityDefaults`                | Disable security defaults                      |
-| `-DisableEnterpiseApplicationUserConsent` | Disable enterprise application user consent    |
-| `-DisableUsersToCreateAppRegistrations`   | Disable users to create app registrations      |
-| `-DisableUsersToReadOtherUsers`           | Disable users to read other users              |
-| `-DisableUsersToCreateSecurityGroups`     | Disable users to create security groups        |
-| `-DisableUsersToCreateUnifiedGroups`      | Disable users to create unified groups         |
-| `-CreateUnifiedGroupCreationAllowedGroup` | Create UnifiedGroupCreationAllowed group       |
-| `-EnableBlockMsolPowerShell`              | Disable legacy MsolPowerShell access           |
+| Argument                                  | Description                                     |
+| ----------------------------------------- | ----------------------------------------------- |
+| `-AddAzureADReport`                       | Add a report section for Azure Active Directory |
+| `-CreateBreakGlassAccount`                | Create a BreakGlass Account if no one is found  |
+| `-EnableSecurityDefaults`                 | Enable security defaults                        |
+| `-DisableSecurityDefaults`                | Disable security defaults                       |
+| `-DisableEnterpiseApplicationUserConsent` | Disable enterprise application user consent     |
+| `-DisableUsersToCreateAppRegistrations`   | Disable users to create app registrations       |
+| `-DisableUsersToReadOtherUsers`           | Disable users to read other users               |
+| `-DisableUsersToCreateSecurityGroups`     | Disable users to create security groups         |
+| `-DisableUsersToCreateUnifiedGroups`      | Disable users to create unified groups          |
+| `-CreateUnifiedGroupCreationAllowedGroup` | Create UnifiedGroupCreationAllowed group        |
+| `-EnableBlockMsolPowerShell`              | Disable legacy MsolPowerShell access            |
 
 ### SharePoint Online
 
@@ -168,6 +170,7 @@ Alias: `aaddepl`
 | -------------------------- | ------------------------------------------------------------------------ |
 | `-Help`                    | Display link to the arguments documentation                              |
 | `-Version`                 | Display the version of AzureAdDeployer                                   |
+| `-SkipUpdateCheck`         | Skip the automatic update check to run the outdated version              |
 | `-InstallDesktopIcon`      | Create Desktop icon (Windows only)                                       |
 | `-UseExistingGraphSession` | Do not create a new Graph SDK PowerShell session                         |
 | `-UseExistingSpoSession`   | Do not create a new SharePoint Online PowerShell session                 |
@@ -193,3 +196,7 @@ Checkout the [AzureAdDeployer project board](https://github.com/users/swissbuech
 ### User MFA check
 
 - Functions inspired by: <https://o365reports.com/2022/04/27/get-mfa-status-of-office-365-users-using-microsoft-graph-powershell/>
+
+### Compare Module
+
+- Functions inspired by: <https://github.com/jdhitsolutions/PSScriptTools>

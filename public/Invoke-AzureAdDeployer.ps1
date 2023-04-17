@@ -7,6 +7,7 @@ function Invoke-AzureAdDeployer {
         [switch]$KeepGraphSessionAlive,
         [switch]$UseExistingSpoSession,
         [switch]$KeepSpoSessionAlive,
+        [switch]$AddAzureADReport,
         [switch]$AddExchangeOnlineReport,
         [switch]$AddSharePointOnlineReport,
         [switch]$CreateBreakGlassAccount,
@@ -25,13 +26,14 @@ function Invoke-AzureAdDeployer {
         [switch]$HideUnifiedMailboxFromOutlookClient,
         [switch]$DisableAddToOneDrive,
         [switch]$InstallDesktopIcon,
+        [switch]$SkipUpdateCheck,
         [switch]$Version,
         [switch]$Help
     )
     $script:ReportTitle = "Microsoft 365 Security Report"
-    $ModuleVersion = $script:ModuleInfos.ModuleVersion
-    $ModuleName = $script:ModuleInfos.RootModule.Replace(".psm1", "")
-    $script:VersionMessage = "$ModuleName $ModuleVersion"
+    $script:ModuleVersion = $script:ModuleInfos.ModuleVersion
+    $script:ModuleName = $script:ModuleInfos.RootModule.Replace(".psm1", "")
+    $script:VersionMessage = "$script:ModuleName $script:ModuleVersion"
     $Repository = $script:ModuleInfos.PrivateData.PSData.ProjectUri
     $LicenseUri = $script:ModuleInfos.PrivateData.PSData.LicenseUri
     $Copyright = $script:ModuleInfos.Copyright
@@ -67,7 +69,7 @@ function Invoke-AzureAdDeployer {
 
     <# Script logic start section #>
     if ($Version) {
-        Write-Host $ModuleVersion
+        Write-Host $script:ModuleVersion
         return
     }
     if ($Help) {
@@ -78,9 +80,19 @@ function Invoke-AzureAdDeployer {
         Install-DesktopIcon 
         return
     }
+
     Request-InteractiveMode -Parameters $PSBoundParameters
+
+    if (!$script:InteractiveMode -and !$SkipUpdateCheck -and (Get-ModuleUpdateNeeded) ) {
+        Get-ModuleUpdateMessageCLI
+        return
+    }
+
     if ($script:InteractiveMode) {
         Show-InteractiveMenu
+    }
+    else {
+        Write-Host $script:VersionMessage
     }
 
     if (-not $UseExistingGraphSession) { Connect-GraphSession }
@@ -160,6 +172,6 @@ function Invoke-AzureAdDeployer {
     $Report = ConvertTo-Html -Body "$ReportTitleHtml $Report" -Title $ReportTitle -Head (Get-Header) -PostContent $PostContentHtml
     $Report | Out-File $Desktop\$ReportName -Force
     Invoke-Item $Desktop\$ReportName
-    if ($script:InteractiveMode) { Read-Host "Click [ENTER] key to exit $ModuleName" }
+    if ($script:InteractiveMode) { Read-Host "Click [ENTER] to exit $script:ModuleName" }
 }
 Set-Alias aaddepl -Value Invoke-AzureAdDeployer
