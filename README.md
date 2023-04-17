@@ -31,8 +31,6 @@ The module is published on the PowerShellGallery. You can install this module di
 
 `Install-Module -Name AzureAdDeployer -Scope CurrentUser -Force`
 
-Make sure you also install the required [dependencies](#install-dependencies)
-
 ### Create Desktop icon (Windows only)
 
 You need to recreate the Desktop icon after every update
@@ -48,20 +46,6 @@ Update-Module -Name AzureAdDeployer -Force
 ### Uninstall
 
 `Uninstall-Module -Name AzureAdDeployer -Scope CurrentUser`
-
-## Dependencies
-
-### Install dependencies
-
-```PowerShell
-Install-Module -Name Microsoft.Graph -MinimumVersion 1.25.0 -Scope CurrentUser -Force
-```
-
-### Update dependencies
-
-```PowerShell
-Update-Module -Name Microsoft.Graph -Force
-```
 
 ## Usage
 
