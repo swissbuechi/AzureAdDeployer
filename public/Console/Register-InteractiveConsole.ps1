@@ -4,7 +4,6 @@ function Request-InteractiveMode {
         $Parameters
     )
     if ($Parameters.Count) {
-        Write-Host $script:VersionMessage
         return
     }
     $script:InteractiveMode = $true
@@ -12,6 +11,9 @@ function Request-InteractiveMode {
 function Show-InteractiveMenu {
     $script:AddExchangeOnlineReport = $true
     $script:AddSharePointOnlineReport = $true
+    if (Get-ModuleUpdateNeeded) { 
+        Get-ModuleUpdateMessageGUI
+    }
     Show-MainMenu
 }
 function Show-MainMenu {
