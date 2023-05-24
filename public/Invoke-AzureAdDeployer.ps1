@@ -26,6 +26,7 @@ function Invoke-AzureAdDeployer {
         [switch]$HideUnifiedMailboxFromOutlookClient,
         [switch]$DisableAddToOneDrive,
         [switch]$InstallDesktopIcon,
+        [switch]$InstallDependencies,
         [switch]$SkipUpdateCheck,
         [switch]$Version,
         [switch]$Help
@@ -34,6 +35,7 @@ function Invoke-AzureAdDeployer {
     $script:ModuleVersion = $script:ModuleInfos.ModuleVersion
     $script:ModuleName = $script:ModuleInfos.RootModule.Replace(".psm1", "")
     $script:VersionMessage = "$script:ModuleName $script:ModuleVersion"
+    $script:Dependencies = $script:ModuleInfos.PrivateData.PSData.ExternalModuleDependencies
     $Repository = $script:ModuleInfos.PrivateData.PSData.ProjectUri
     $LicenseUri = $script:ModuleInfos.PrivateData.PSData.LicenseUri
     $Copyright = $script:ModuleInfos.Copyright
@@ -78,6 +80,15 @@ function Invoke-AzureAdDeployer {
     }
     if ($InstallDesktopIcon) { 
         Install-DesktopIcon 
+        return
+    }
+    if ($InstallDependencies) { 
+        Get-AllModulesInstalled -Install
+        return
+    }
+
+    if (-not (Get-AllModulesInstalled)) {
+        Read-Host "Click [ENTER] to exit $script:ModuleName"
         return
     }
 

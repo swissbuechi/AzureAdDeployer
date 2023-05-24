@@ -11,7 +11,7 @@
     RootModule           = 'AzureAdDeployer.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '2.16.3'
+    ModuleVersion        = '2.16.4'
 
     # Supported PSEditions
     CompatiblePSEditions = @("Core")
@@ -50,31 +50,8 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    RequiredModules      = @( @{
-            ModuleName    = "Microsoft.Graph.Authentication"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "883916f2-9184-46ee-b1f8-b6a2fb784cee"
-        }, @{
-            ModuleName    = "Microsoft.Graph.Users"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "71150504-37a3-48c6-82c7-7a00a12168db"
-        }, @{
-            ModuleName    = "Microsoft.Graph.Identity.DirectoryManagement"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "c767240d-585c-42cb-bb2f-6e76e6d639d4"
-        }, @{
-            ModuleName    = "Microsoft.Graph.DeviceManagement.Enrolment"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "447dd5b5-a01b-45bb-a55c-c9ecce3e820f"
-        }, @{
-            ModuleName    = "Microsoft.Graph.Identity.SignIns"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "60f889fa-f873-43ad-b7d3-b7fc1273a44f"
-        }, @{
-            ModuleName    = "Microsoft.Graph.Devices.CorporateManagement"; 
-            ModuleVersion = "1.25.0"; 
-            Guid          = "39dbb3bc-1a84-424a-9efe-683be70a1810"
-        }, @{
+    RequiredModules      = @(
+        @{
             ModuleName    = "PnP.PowerShell"; 
             ModuleVersion = "2.1.1"; 
             Guid          = "0b0430ce-d799-4f3b-a565-f0dca1f31e17"
@@ -129,16 +106,16 @@
         PSData = @{
             
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags                     = 'azureactivedirectory', 'sharepoint-online', 'exchangeonline'
+            Tags                       = 'azureactivedirectory', 'sharepoint-online', 'exchangeonline'
 
             # A URL to the license for this module.
-            LicenseUri               = 'https://github.com/swissbuechi/AzureAdDeployer/blob/main/LICENSE'
+            LicenseUri                 = 'https://github.com/swissbuechi/AzureAdDeployer/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri               = 'https://github.com/swissbuechi/AzureAdDeployer'
+            ProjectUri                 = 'https://github.com/swissbuechi/AzureAdDeployer'
 
             # A URL to an icon representing this module.
-            IconUri                  = 'https://raw.githubusercontent.com/swissbuechi/AzureAdDeployer/main/logo/logo.png'
+            IconUri                    = 'https://raw.githubusercontent.com/swissbuechi/AzureAdDeployer/main/logo/logo.png'
 
             # ReleaseNotes of this module
             # ReleaseNotes = ''
@@ -147,10 +124,36 @@
             # Prerelease = ''
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update/save
-            RequireLicenseAcceptance = $false
+            RequireLicenseAcceptance   = $false
 
             # External dependent modules of this module
-            # ExternalModuleDependencies = @()
+            ExternalModuleDependencies = @(
+                @{
+                    ModuleName    = "Microsoft.Graph.Authentication"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "883916f2-9184-46ee-b1f8-b6a2fb784cee"
+                }, @{
+                    ModuleName    = "Microsoft.Graph.Users"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "71150504-37a3-48c6-82c7-7a00a12168db"
+                }, @{
+                    ModuleName    = "Microsoft.Graph.Identity.DirectoryManagement"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "c767240d-585c-42cb-bb2f-6e76e6d639d4"
+                }, @{
+                    ModuleName    = "Microsoft.Graph.DeviceManagement.Enrolment"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "447dd5b5-a01b-45bb-a55c-c9ecce3e820f"
+                }, @{
+                    ModuleName    = "Microsoft.Graph.Identity.SignIns"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "60f889fa-f873-43ad-b7d3-b7fc1273a44f"
+                }, @{
+                    ModuleName    = "Microsoft.Graph.Devices.CorporateManagement"; 
+                    ModuleVersion = "1.25.0"; 
+                    Guid          = "39dbb3bc-1a84-424a-9efe-683be70a1810"
+                }
+            )
 
         } # End of PSData hashtable
 
