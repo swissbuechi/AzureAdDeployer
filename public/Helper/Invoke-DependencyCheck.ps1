@@ -51,11 +51,15 @@ Function Get-AllModulesInstalled {
             if ($Install) {
                 Write-Host "Module $($Dependency.ModuleName) with version $($Dependency.ModuleVersion) is not installed. Installing it now." -ForegroundColor Yellow
                 Install-Module -Name $Dependency.ModuleName -RequiredVersion $Dependency.ModuleVersion -Force
+                Import-Module -Name $Dependency.ModuleName -RequiredVersion $Dependency.ModuleVersion -Force
             }
             else {
                 Write-Host "Module $($Dependency.ModuleName) with version $($Dependency.ModuleVersion) is not installed. Please install it first." -ForegroundColor Red
                 $AllModulesInstalled = $false
             }
+        }
+        else {
+            Import-Module -Name $Dependency.ModuleName -RequiredVersion $Dependency.ModuleVersion -Force
         }
     }
     if (-not ($AllModulesInstalled)) {
