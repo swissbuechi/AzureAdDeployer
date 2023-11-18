@@ -11,7 +11,7 @@
     RootModule           = 'AzureAdDeployer.psm1'
 
     # Version number of this module.
-    ModuleVersion        = '2.16.7'
+    ModuleVersion        = '2.16.8'
 
     # Supported PSEditions
     CompatiblePSEditions = @("Core")
@@ -120,6 +120,7 @@
                 "DnsClient-PS",
                 "Microsoft.Graph.Authentication",
                 "Microsoft.Graph.Users",
+                "Microsoft.Graph.Groups",
                 "Microsoft.Graph.Identity.DirectoryManagement",
                 "Microsoft.Graph.DeviceManagement.Enrolment",
                 "Microsoft.Graph.Identity.SignIns",
