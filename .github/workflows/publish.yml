@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  publish-to-gallery:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,11 +18,7 @@ jobs:
         shell: pwsh
         run: Import-Module ./ -Force
 
-      - name: Install dependencies
-        shell: pwsh
-        run: Invoke-AzureAdDeployer -InstallDependencies
-
-      - name: Publish
+      - name: Publish module
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
         shell: pwsh
