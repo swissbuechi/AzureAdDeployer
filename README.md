@@ -167,6 +167,10 @@ Alias: `aaddepl`
 
 Checkout the [AzureAdDeployer project board](https://github.com/users/swissbuechi/projects/4)
 
+## Development
+
+`Import-Module .\AzureAdDeployer.psm1 -Force`
+
 ## Credits
 
 ### Icon
