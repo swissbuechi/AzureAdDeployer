@@ -2,7 +2,7 @@ function Connect-SPOSession {
     # if (Request-SPOSession) { Disconnect-SPOSession }
     Disconnect-SPOSession
     Write-Host "Connecting SharePoint Online PowerShell"
-    Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser
+    Connect-PnPOnline -Url (Get-SPOAdminURL) -Interactive -LaunchBrowser -ClientId "acecb20a-2e59-48c2-8a3c-aa9a9bd3352c"
     if ( -not (Request-SPOSession)) { return }
 }
 function Get-SPOAdminURL {

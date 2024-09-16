@@ -6,7 +6,7 @@ Function Get-AllModulesInstalled {
     $Dependencies = @(
         @{
             ModuleName    = "PnP.PowerShell"; 
-            ModuleVersion = "2.2.0"; 
+            ModuleVersion = "2.12.0";
         }, @{
             ModuleName    = "ExchangeOnlineManagement"; 
             ModuleVersion = "3.2.0"; 
@@ -19,7 +19,7 @@ Function Get-AllModulesInstalled {
         }, @{
             ModuleName    = "Microsoft.Graph.Users"; 
             ModuleVersion = "1.28.0"; 
-       }, @{
+        }, @{
             ModuleName    = "Microsoft.Graph.Groups"; 
             ModuleVersion = "1.28.0"; 
         }, @{
